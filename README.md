@@ -269,4 +269,5 @@
 
 
 ## ERD
-![image](https://github.com/dlwlsh92/concert-reservation/assets/102504924/7bfe1c36-ecb6-41ad-a3db-708d8265af09)
+![image](https://github.com/dlwlsh92/concert-reservation/assets/102504924/915136c9-f054-4b95-a310-28b8489c15c0)
+
