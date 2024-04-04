@@ -221,12 +221,9 @@
         
         ```jsx
         {
-            concertEventId: number;
-            availableSeats: {
-                        seatsId: number;
-                        seatsNumber: number;
-                    }[];
-        }
+            seatsId: number;
+            seatsNumber: number;
+        }[];
         // 예약 가능한 좌석이 없는 경우 빈 배열을 반환함.
         ```
         
