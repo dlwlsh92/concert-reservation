@@ -161,6 +161,10 @@
             Server -->> cl: 잔액 부족 exception
         else 결제 유효 시간이 지난 경우
             Server -->> cl: 유효 시간 만료 exception
+        else 이미 결제한 항목일 경우
+            Server -->> cl: 이미 결제한 항목 exception
+        else 존재하지 않는 예약인 경우
+            Server -->> cl: 존재하지 않는 예약 exception
         end
    ```
 
@@ -266,6 +270,8 @@
     3. 예외 케이스:
         1. 결제 유효 시간이 지난 경우
         2. 잔액이 부족한 경우
+        3. 이미 결제한 항목인 경우
+        4. 존재하지 않는 항목인 경우
 
 
 ## ERD
