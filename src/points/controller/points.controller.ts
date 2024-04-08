@@ -1,16 +1,18 @@
-import {Body, Controller, Get, Param, Post} from '@nestjs/common';
+import { Controller, Get, Post } from "@nestjs/common";
+import { TypedBody, TypedParam } from "@nestia/core";
 
-@Controller('points')
+@Controller("points")
 export class PointsController {
-    @Get('users/:userId')
-    async getPoints(@Param('userId') userId: number) {
-        return 100
-    }
+  @Get("users/:userId")
+  async getPoints(@TypedParam("userId") userId: number) {
+    return 100;
+  }
 
-    @Post('users/:userId/charge')
-    async chargePoints(
-        @Param('userId') userId: number,
-        @Body('amount') amount: number) {
-        return 5000
-    }
+  @Post("users/:userId/charge")
+  async chargePoints(
+    @TypedParam("userId") userId: number,
+    @TypedBody() amount: number
+  ) {
+    return 5000;
+  }
 }

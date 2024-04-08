@@ -1,17 +1,29 @@
-import { Body, Controller, Get, Param, Post, Query } from "@nestjs/common";
+import { Controller, Get, Post } from "@nestjs/common";
+import { TypedBody, TypedParam, TypedQuery } from "@nestia/core";
+import { ValidationTokenRes } from "./dto/validation-token.res";
+import { AvailableDateRes } from "./dto/available-date.res";
+import { AvailableSeatRes } from "./dto/available-seats.res";
+import { Token, TokenRes } from "./dto/token.res";
 
 @Controller("reservations")
 export class ReservationsController {
   @Post("token")
-  async createToken(
-    @Body("userId") userId: number,
-    @Body("concertId") concertId: number
-  ) {
+  async createToken(@TypedBody() token: Token) {
     return "token";
   }
 
   @Get("token/validation")
-  async validateToken(@Query("reservationToken") reservationToken: string) {
+  async validateToken(
+    @TypedQuery() reservationToken: TokenRes
+  ): Promise<ValidationTokenRes> {
+    console.log(
+      "=>(reservations.controller.ts:23) reservationToken",
+      reservationToken
+    );
+    console.log(
+      "=>(reservations.controller.ts:27) reservationToken.token",
+      reservationToken.token
+    );
     return {
       status: "available",
       waitingTime: null,
@@ -19,7 +31,9 @@ export class ReservationsController {
   }
 
   @Get(":concertId/available-dates")
-  async getAvailableDates(@Param("concertId") concertId: number) {
+  async getAvailableDates(
+    @TypedParam("concertId") concertId: number
+  ): Promise<AvailableDateRes[]> {
     return [
       {
         concertEventId: 1,
@@ -31,14 +45,16 @@ export class ReservationsController {
   }
 
   @Get(":concertEventId/avaliable-seats")
-  async getAvailableSeats(@Param("concertEventId") concertEventId: number) {
+  async getAvailableSeats(
+    @TypedParam("concertEventId") concertEventId: number
+  ): Promise<AvailableSeatRes[]> {
     return [
       {
-        seatsId: 1,
+        seatId: 1,
         seatNumber: 1,
       },
       {
-        seatsId: 2,
+        seatId: 2,
         seatNumber: 2,
       },
     ];
@@ -46,8 +62,8 @@ export class ReservationsController {
 
   @Post("seats/:seatsId/assign")
   async assignSeat(
-    @Param("seatsId") seatsId: number,
-    @Body("concertEventId") concertEventId: string
+    @TypedParam("seatsId") seatsId: number,
+    @TypedBody() concertEventId: string
   ) {
     return true;
   }
