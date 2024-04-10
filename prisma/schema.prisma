@@ -1,0 +1,86 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id      Int     @id @default(autoincrement())
+  name    String
+  point   Int     @default(0)
+  version Int     @default(0)
+  reservations Reservation[]
+  orders       Order[]
+}
+
+model Concert {
+  id           Int             @id @default(autoincrement())
+  concertName  String
+  concertEvents ConcertEvent[]
+}
+
+model ConcertEvent {
+  id              Int       @id @default(autoincrement())
+  concertId       Int
+  startDate       DateTime
+  maxSeatCapacity Int
+  concert         Concert   @relation(fields: [concertId], references: [id])
+  seats           Seat[]
+  reservations    Reservation[]
+}
+
+model Seat {
+  id              Int       @id @default(autoincrement())
+  concertEventId  Int
+  seatNumber      Int
+  seatStatus      SeatStatus @default(available)
+  price           Int
+  version         Int       @default(0)
+  concertEvent    ConcertEvent @relation(fields: [concertEventId], references: [id])
+  reservations    Reservation[]
+}
+
+enum SeatStatus {
+  reserved
+  available
+}
+
+enum ReservationStatus {
+  pending
+  confirmed
+  expired
+}
+
+model Reservation {
+  id                Int        @id @default(autoincrement())
+  userId            Int
+  concertEventId    Int
+  seatId            Int
+  price             Int
+  expirationDate    DateTime
+  status            ReservationStatus
+  user              User       @relation(fields: [userId], references: [id])
+  concertEvent      ConcertEvent @relation(fields: [concertEventId], references: [id])
+  seat              Seat       @relation(fields: [seatId], references: [id])
+  order             Order?
+}
+
+model Order {
+  id            Int        @id @default(autoincrement())
+  userId        Int
+  reservationId Int @unique
+  totalPrice    Int
+  orderDate     DateTime @default(now())
+  user          User       @relation(fields: [userId], references: [id])
+  reservation   Reservation @relation(fields: [reservationId], references: [id])
+}
