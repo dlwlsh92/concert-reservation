@@ -10,7 +10,11 @@ export class TokenParameterRepository implements ITokenParameterStorage {
     return new Token("token", new Date());
   }
 
-  async setToken(token: string): Promise<Token> {
+  async setToken(
+    token: string,
+    accessStartDate: Date,
+    expirationDate: Date
+  ): Promise<Token> {
     // TODO: Implement this method
     return new Token("token", new Date());
   }
