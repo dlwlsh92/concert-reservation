@@ -16,6 +16,7 @@ export class TokenParameterRepository implements ITokenParameterStorage {
     expirationDate: Date
   ): Promise<Token> {
     // TODO: Implement this method
+    // 인자로 받은 Date 객체를 unix milliseconds로 변환하여 Token과 함께 저장하고 만료시간을 ttl로 설정
     return new Token("token", new Date());
   }
 

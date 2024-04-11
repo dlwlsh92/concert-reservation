@@ -15,5 +15,11 @@ export class ReservationService {
     const expirationDate = await this.tokenManagementService.getExpirationDate(
       accessStartDate
     );
+    const createdTokenInstance = await this.tokenManagementService.setToken(
+      token,
+      accessStartDate,
+      expirationDate
+    );
+    return createdTokenInstance.token;
   }
 }

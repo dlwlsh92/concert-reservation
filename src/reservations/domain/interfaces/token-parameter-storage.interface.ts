@@ -2,7 +2,7 @@ import { Token } from "../token";
 
 export const ITokenParameterStorageToken = Symbol("TokenParameterStorage");
 export interface ITokenParameterStorage {
-  getToken(token: string): Promise<Token>;
+  getToken(token: string): Promise<Token | null>;
   setToken(
     token: string,
     accessStartDate: Date,

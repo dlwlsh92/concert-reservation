@@ -28,10 +28,16 @@ export class TokenManagementService {
   }
 
   async setToken(token: string, accessStartDate: Date, expirationDate: Date) {
-    return this.tokenParameterStorage.setToken(
+    const createdToken = this.tokenParameterStorage.setToken(
       token,
       accessStartDate,
       expirationDate
     );
+    await this.tokenParameterStorage.addWaitingCount();
+    return createdToken;
+  }
+
+  async getToken(token: string) {
+    return this.tokenParameterStorage.getToken(token);
   }
 }
