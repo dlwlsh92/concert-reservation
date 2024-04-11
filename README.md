@@ -5,6 +5,32 @@
 - 동일한 좌석에 접근하는 유저의 동시성을 고려하고, 이미 선점한 좌석에 대해 다른 유저들이 접근할 수 없도록 합니다.
 - ERD는 마지막에 추가해두었습니다.
   
+## Swagger
+
+### 좌석 결제 요청
+![image](https://github.com/dlwlsh92/concert-reservation/assets/102504924/a9b914d4-da4f-4fc3-b2c8-aa5d90928169)
+
+### 포인트 조회
+![image](https://github.com/dlwlsh92/concert-reservation/assets/102504924/9bd55dd4-4bd3-4c87-b6e4-e5bdf51d63ac)
+
+### 포인트 충전
+![image](https://github.com/dlwlsh92/concert-reservation/assets/102504924/235d7f7d-cc6f-4f57-9ade-2485428afac4)
+
+### 대기열 토큰 발급 요청
+![image](https://github.com/dlwlsh92/concert-reservation/assets/102504924/3c40e95e-b95b-4ecf-bb17-332acbed754e)
+
+### 대기열 토큰 검증
+![image](https://github.com/dlwlsh92/concert-reservation/assets/102504924/fc1ed57a-3f0e-4116-b928-d1e46d6ed5fd)
+
+### 예약 가능한 콘서트 날짜 조회(대기열 토큰 검증 이후 요청 가능함)
+![image](https://github.com/dlwlsh92/concert-reservation/assets/102504924/74becd0e-7126-4b1c-a2ec-07d9b948e090)
+
+### 예약 가능한 좌석 조회(대기열 토큰 검증 이후 요청 가능함)
+![image](https://github.com/dlwlsh92/concert-reservation/assets/102504924/4cf74577-52d9-4b4f-82fe-bc59d2213afe)
+
+### 좌석 예약 요청(대기열 토큰 검증 이후 요청 가능함)
+![image](https://github.com/dlwlsh92/concert-reservation/assets/102504924/3e504813-9ce4-4aba-9fc1-d0604950a8ab)
+
 
 ## 주요 구현 내용
 
