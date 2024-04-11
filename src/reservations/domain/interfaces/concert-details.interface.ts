@@ -9,4 +9,5 @@ export interface IConcertDetails {
   getConcertEventDetails(
     concertEventId: number
   ): Promise<ConcertEventDetails | null>;
+  reserveSeat(seatId: number, concertEventId: number): Promise<boolean>;
 }

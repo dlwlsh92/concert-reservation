@@ -19,4 +19,9 @@ export class ConcertDetailsRepository implements IConcertDetails {
     // TODO: Implement this method
     return new ConcertEventDetails(1, 1, new Date(), 40, []);
   }
+
+  async reserveSeat(seatId: number, concertEventId: number): Promise<boolean> {
+    // TODO: Implement this method
+    return true;
+  }
 }

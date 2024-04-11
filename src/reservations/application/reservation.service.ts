@@ -69,4 +69,8 @@ export class ReservationService {
       };
     });
   }
+
+  async reserveSeat(seatId: number, concertEventId: number) {
+    return this.concertDetailsRepository.reserveSeat(seatId, concertEventId);
+  }
 }

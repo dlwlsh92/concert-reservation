@@ -1,9 +1,11 @@
 import { Controller, Get, Post } from "@nestjs/common";
 import { TypedBody, TypedParam } from "@nestia/core";
 import { ChargePointReq } from "./dto/charge-point.req";
+import { PointService } from "../application/point.service";
 
 @Controller("points")
 export class PointsController {
+  constructor(private readonly pointService: PointService) {}
   /**
    * 포인트 조회.
    * @param userId 유저 ID
@@ -12,7 +14,7 @@ export class PointsController {
    * */
   @Get("users/:userId")
   async getPoints(@TypedParam("userId") userId: number) {
-    return 100;
+    return this.pointService.getPoints(userId);
   }
 
   /**
@@ -27,7 +29,6 @@ export class PointsController {
     @TypedParam("userId") userId: number,
     @TypedBody() chargeAmountReq: ChargePointReq
   ) {
-    console.log("=>(points.controller.ts:30) amount", chargeAmountReq.amount);
-    return 5000;
+    return this.pointService.addPoints(userId, chargeAmountReq.amount);
   }
 }

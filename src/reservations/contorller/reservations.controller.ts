@@ -5,6 +5,7 @@ import { AvailableDateRes } from "./dto/available-date.res";
 import { AvailableSeatRes } from "./dto/available-seats.res";
 import { ValidationTokenReq } from "./dto/validation-token.req";
 import { ReservationService } from "../application/reservation.service";
+import { ReserveSeatReq } from "./dto/reserve-seat.req";
 
 @Controller("reservations")
 export class ReservationsController {
@@ -71,7 +72,7 @@ export class ReservationsController {
   @Post("seats/:seatsId/assign")
   async reserveSeat(
     @TypedParam("seatsId") seatsId: number,
-    @TypedBody() concertEventId: string
+    @TypedBody() reserveSeatReq: ReserveSeatReq
   ) {
     return true;
   }
