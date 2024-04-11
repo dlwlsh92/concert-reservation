@@ -1,9 +1,9 @@
-enum TokenStatus {
+export enum TokenStatus {
   pending = "pending",
   available = "available",
 }
 
-type ValidationResponse = {
+export type ValidationResponse = {
   status: TokenStatus;
   waitingSeconds: number;
 };

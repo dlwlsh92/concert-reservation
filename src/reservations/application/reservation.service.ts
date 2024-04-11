@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, Injectable } from "@nestjs/common";
 import { TokenManagementService } from "./token-management.service";
 import { v4 as uuidv4 } from "uuid";
 
@@ -21,5 +21,13 @@ export class ReservationService {
       expirationDate
     );
     return createdTokenInstance.token;
+  }
+
+  async validateToken(token: string) {
+    const tokenInstance = await this.tokenManagementService.getToken(token);
+    if (tokenInstance === null) {
+      throw new HttpException("토큰이 만료되었습니다.", 410);
+    }
+    return tokenInstance.validateToken(new Date());
   }
 }
