@@ -74,6 +74,9 @@ export class ReservationsController {
     @TypedParam("seatsId") seatsId: number,
     @TypedBody() reserveSeatReq: ReserveSeatReq
   ) {
-    return true;
+    return this.reservationService.reserveSeat(
+      seatsId,
+      reserveSeatReq.concertEventId
+    );
   }
 }
