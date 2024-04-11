@@ -3,7 +3,7 @@ import { TypedBody, TypedParam, TypedQuery } from "@nestia/core";
 import { ValidationTokenRes } from "./dto/validation-token.res";
 import { AvailableDateRes } from "./dto/available-date.res";
 import { AvailableSeatRes } from "./dto/available-seats.res";
-import { ValidationTokenReq } from "./dto/validationTokenReq";
+import { ValidationTokenReq } from "./dto/validation-token.req";
 import { TokenManagementService } from "../application/token-management.service";
 
 @Controller("reservations")
@@ -19,7 +19,7 @@ export class ReservationsController {
    * */
   @Post("token")
   async createToken() {
-    return this.tokenManagementService.createToken();
+    return "ㅅㄴㅇㄹㅁㄴㅇ";
   }
 
   /**
