@@ -7,6 +7,8 @@
   
 ## Swagger
 
+- test code는 src/test 폴더에 모두 작성해두었습니다!
+
 ### 좌석 결제 요청
 ![image](https://github.com/dlwlsh92/concert-reservation/assets/102504924/a9b914d4-da4f-4fc3-b2c8-aa5d90928169)
 
