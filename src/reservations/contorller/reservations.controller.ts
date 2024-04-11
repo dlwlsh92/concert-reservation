@@ -4,13 +4,11 @@ import { ValidationTokenRes } from "./dto/validation-token.res";
 import { AvailableDateRes } from "./dto/available-date.res";
 import { AvailableSeatRes } from "./dto/available-seats.res";
 import { ValidationTokenReq } from "./dto/validation-token.req";
-import { TokenManagementService } from "../application/token-management.service";
+import { ReservationService } from "../application/reservation.service";
 
 @Controller("reservations")
 export class ReservationsController {
-  constructor(
-    private readonly tokenManagementService: TokenManagementService
-  ) {}
+  constructor(private readonly reservationService: ReservationService) {}
 
   /**
    * 대기열 토큰 발급 요청.
@@ -19,7 +17,7 @@ export class ReservationsController {
    * */
   @Post("token")
   async createToken() {
-    return "ㅅㄴㅇㄹㅁㄴㅇ";
+    return this.reservationService.createToken();
   }
 
   /**
@@ -33,18 +31,7 @@ export class ReservationsController {
   async validateToken(
     @TypedQuery() reservationToken: ValidationTokenReq
   ): Promise<ValidationTokenRes> {
-    console.log(
-      "=>(reservations.controller.ts:23) reservationToken",
-      reservationToken
-    );
-    console.log(
-      "=>(reservations.controller.ts:27) reservationToken.token",
-      reservationToken.token
-    );
-    return {
-      status: "available",
-      waitingTime: 0,
-    };
+    return this.reservationService.validateToken(reservationToken.token);
   }
 
   /**
@@ -57,14 +44,7 @@ export class ReservationsController {
   async getAvailableDates(
     @TypedParam("concertId") concertId: number
   ): Promise<AvailableDateRes[]> {
-    return [
-      {
-        concertEventId: 1,
-        startDate: new Date(),
-        maxSeatCapacity: 50,
-        currentSeatCount: 10,
-      },
-    ];
+    return this.reservationService.getAvailableConcertDates(concertId);
   }
 
   /**
@@ -77,16 +57,7 @@ export class ReservationsController {
   async getAvailableSeats(
     @TypedParam("concertEventId") concertEventId: number
   ): Promise<AvailableSeatRes[]> {
-    return [
-      {
-        seatId: 1,
-        seatNumber: 1,
-      },
-      {
-        seatId: 2,
-        seatNumber: 2,
-      },
-    ];
+    return this.reservationService.getAvailableSeats(concertEventId);
   }
 
   /**
