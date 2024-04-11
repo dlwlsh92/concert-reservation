@@ -1,4 +1,4 @@
-import { reservationMockData } from "./test.entity";
+import { reservationMockData } from "./test.entities";
 import { addHoursToCurrentTime } from "./utils";
 import { PaymentEligibilityStatus } from "../reservations/domain/reservation";
 import { Token } from "../reservations/domain/token";

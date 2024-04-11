@@ -1,4 +1,6 @@
+type TokenStatus = "pending" | "available";
+
 export interface ValidationTokenRes {
-  status: string;
-  waitingTime: number | null;
+  status: TokenStatus;
+  waitingTime: number;
 }
