@@ -1,22 +1,21 @@
-export type ReservationStatus = "pending" | "confirmed" | "expired";
-export type SeatStatus = "reserved" | "available";
+export type ReservationStatus = "pending" | "confirmed";
 
 export enum PaymentEligibilityStatus {
   Eligible = "Eligible",
-  SeatNotReserved = "SeatNotReserved",
+  SeatExpired = "SeatExpired",
   ConcertAlreadyStarted = "ConcertAlreadyStarted",
   ReservationExpired = "ReservationExpired",
   ReservationConfirmed = "ReservationConfirmed",
 }
 
-export class Reservation {
+export class ReservationValidator {
   private readonly currentTime: Date;
   constructor(
     public readonly id: number,
     public readonly userId: number,
     public readonly concertEventId: number,
     public readonly seatNumber: number,
-    public readonly seatStatus: SeatStatus,
+    public readonly seatExpirationDate: Date,
     public readonly price: number,
     public readonly expirationDate: Date,
     public readonly status: ReservationStatus
@@ -30,14 +29,14 @@ export class Reservation {
     if (this.isConfirmed())
       return PaymentEligibilityStatus.ReservationConfirmed;
 
-    if (!this.isReservedSeat()) return PaymentEligibilityStatus.SeatNotReserved;
+    if (this.isExpiredSeat()) return PaymentEligibilityStatus.SeatExpired;
 
     return PaymentEligibilityStatus.Eligible;
   }
 
   isExpired(): boolean {
     // 예약 만료 여부 확인
-    return this.currentTime > this.expirationDate || this.status === "expired";
+    return this.currentTime > this.expirationDate;
   }
 
   isConfirmed(): boolean {
@@ -45,8 +44,8 @@ export class Reservation {
     return this.status === "confirmed";
   }
 
-  isReservedSeat(): boolean {
-    // 기본적으로 결제 단계에 넘어갈 수 있는 조건은 좌석이 예약되어 선점된 상태여야 한다.
-    return this.seatStatus === "reserved";
+  isExpiredSeat(): boolean {
+    // 좌석의 expire 여부 확인
+    return this.currentTime > this.seatExpirationDate;
   }
 }

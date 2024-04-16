@@ -1,4 +1,4 @@
-import { Point, StatusMessage } from "../points/domain/point";
+import { Point, StatusMessage } from "../../points/domain/point";
 
 describe("포인트 관련 로직에 대한 단위 테스트", () => {
   it("포인트를 충전하는 경우 충전된 포인트를 반환한다.", () => {

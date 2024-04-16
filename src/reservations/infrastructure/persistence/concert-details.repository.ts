@@ -17,7 +17,7 @@ export class ConcertDetailsRepository implements IConcertDetails {
     concertEventId: number
   ): Promise<ConcertEventDetails> {
     // TODO: Implement this method
-    return new ConcertEventDetails(1, 1, new Date(), 40, []);
+    return new ConcertEventDetails(1, 1, new Date(), new Date(), 40, []);
   }
 
   async reserveSeat(seatId: number, concertEventId: number): Promise<boolean> {

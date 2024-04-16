@@ -33,6 +33,7 @@ model ConcertEvent {
   id              Int       @id @default(autoincrement())
   concertId       Int
   startDate       DateTime
+  reservationDate DateTime
   maxSeatCapacity Int
   concert         Concert   @relation(fields: [concertId], references: [id])
   seats           Seat[]
@@ -43,16 +44,11 @@ model Seat {
   id              Int       @id @default(autoincrement())
   concertEventId  Int
   seatNumber      Int
-  seatStatus      SeatStatus @default(available)
+  expirationDate     DateTime @default("9999-01-01T00:00:00Z")
+  isPaid         Boolean   @default(false)
   price           Int
-  version         Int       @default(0)
   concertEvent    ConcertEvent @relation(fields: [concertEventId], references: [id])
   reservations    Reservation[]
-}
-
-enum SeatStatus {
-  reserved
-  available
 }
 
 enum ReservationStatus {

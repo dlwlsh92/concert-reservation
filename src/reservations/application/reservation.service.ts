@@ -42,16 +42,23 @@ export class ReservationService {
       await this.concertDetailsRepository.getUpcomingConcertEventDetails(
         concertId
       );
-    return upcomingConcertEventDetails.map((concertEventDetail) => {
-      const availableSeats = concertEventDetail.getAvailableSeats();
-      return {
-        concertEventId: concertEventDetail.id,
-        startDate: concertEventDetail.startDate,
-        maxSeatCapacity: concertEventDetail.maxSeatCapacity,
-        currentSeatCount:
-          concertEventDetail.maxSeatCapacity - availableSeats.length,
-      };
-    });
+
+    return upcomingConcertEventDetails
+      .filter(
+        (concertEventDetail) =>
+          !concertEventDetail.isConcertStarted() &&
+          concertEventDetail.isReservationStarted()
+      )
+      .map((filteredConcertEventDetail) => {
+        const availableSeats = filteredConcertEventDetail.getAvailableSeats();
+        return {
+          concertEventId: filteredConcertEventDetail.id,
+          startDate: filteredConcertEventDetail.startDate,
+          maxSeatCapacity: filteredConcertEventDetail.maxSeatCapacity,
+          currentSeatCount:
+            filteredConcertEventDetail.maxSeatCapacity - availableSeats.length,
+        };
+      });
   }
 
   async getAvailableSeats(concertEventId: number) {
