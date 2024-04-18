@@ -1,14 +1,12 @@
 import { Controller, Get, Post } from "@nestjs/common";
 import { TypedBody, TypedParam } from "@nestia/core";
 import { ChargePointReq } from "./dto/charge-point.req";
-import { PointService } from "../../../domain/points/application/point.service";
 import { GetPointUsecase } from "../usecase/get-point.usecase";
 import { ChargePointUsecase } from "../usecase/charge-point.usecase";
 
 @Controller("points")
 export class PointsController {
   constructor(
-    private readonly pointService: PointService,
     private readonly getPointUseCase: GetPointUsecase,
     private readonly chargePointUsecase: ChargePointUsecase
   ) {}

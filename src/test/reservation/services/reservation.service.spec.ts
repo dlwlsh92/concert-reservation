@@ -15,7 +15,7 @@ describe("예약 관련 로직에 대한 단위 테스트", () => {
   let reservationWriteRepository: jest.Mocked<IReservationWrite>;
   let prisma: PrismaService;
 
-  beforeEach(() => {
+  beforeAll(() => {
     concertDetailsReaderRepository = {
       getUpcomingConcertEventDetails: jest.fn(),
       getConcertEventDetails: jest.fn(),

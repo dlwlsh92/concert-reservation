@@ -7,7 +7,7 @@ describe("결제를 위한 예약을 검증하는 로직 테스트", () => {
   let reservationReaderRepository: jest.Mocked<IReservationReaderRepository>;
   let paymentValidationService: PaymentValidationService;
 
-  beforeEach(() => {
+  beforeAll(() => {
     reservationReaderRepository = {
       findReservationById: jest.fn(),
     };

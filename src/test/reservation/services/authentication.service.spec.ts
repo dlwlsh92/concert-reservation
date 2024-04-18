@@ -7,7 +7,7 @@ describe("예약 서비스를 이용하기 위한 토큰 인증 서비스에 대
   let tokenParameterStorage: TokenParameterStorageStub;
   let tokenManagementService: TokenManagementService;
 
-  beforeEach(() => {
+  beforeAll(() => {
     tokenParameterStorage = new TokenParameterStorageStub();
     tokenManagementService = new TokenManagementService(tokenParameterStorage);
     tokenManagementService.numberPerCycle = 50;
