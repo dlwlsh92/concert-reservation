@@ -1,14 +1,34 @@
 import { Injectable } from "@nestjs/common";
 import { IReservationReaderRepository } from "../../repositories/reservation-reader.interface";
+import { PrismaService } from "../../../../database/prisma/prisma.service";
+import { Reservation } from "../../entities/reservation";
 
 @Injectable()
 export class ReservationReaderRepository
   implements IReservationReaderRepository
 {
-  constructor() {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async findReservationById(reservationId: number) {
-    // TODO: Implement this method
-    return null;
+    return this.prisma.reservation
+      .findUnique({
+        where: {
+          id: reservationId,
+        },
+      })
+      .then((reservation) => {
+        if (reservation === null) {
+          return null;
+        }
+        return new Reservation(
+          reservation.id,
+          reservation.userId,
+          reservation.concertEventId,
+          reservation.seatId,
+          reservation.price,
+          reservation.expirationDate,
+          reservation.status
+        );
+      });
   }
 }

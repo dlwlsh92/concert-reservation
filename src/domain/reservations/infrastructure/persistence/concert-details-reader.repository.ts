@@ -14,15 +14,70 @@ export class ConcertDetailsReaderRepository implements IConcertDetailsReader {
   async getUpcomingConcertEventDetails(
     concertId: number
   ): Promise<ConcertEventDetails[]> {
-    // TODO: Implement this method
-    return [];
+    const upcomingEvents = await this.prisma.concertEvent.findMany({
+      where: {
+        concertId,
+        startDate: {
+          gte: new Date(),
+        },
+      },
+      include: {
+        seats: true,
+      },
+    });
+    return upcomingEvents.map(
+      (event) =>
+        new ConcertEventDetails(
+          event.id,
+          event.concertId,
+          event.startDate,
+          event.reservationDate,
+          event.maxSeatCapacity,
+          event.seats.map((seat) => {
+            return {
+              id: seat.id,
+              concertEventId: seat.concertEventId,
+              seatNumber: seat.seatNumber,
+              expirationDate: seat.expirationDate,
+              isPaid: seat.isPaid,
+              price: seat.price,
+            };
+          })
+        )
+    );
   }
 
   async getConcertEventDetails(
     concertEventId: number
-  ): Promise<ConcertEventDetails> {
-    // TODO: Implement this method
-    return new ConcertEventDetails(1, 1, new Date(), new Date(), 40, []);
+  ): Promise<ConcertEventDetails | null> {
+    const event = await this.prisma.concertEvent.findUnique({
+      where: {
+        id: concertEventId,
+      },
+      include: {
+        seats: true,
+      },
+    });
+    if (event === null) {
+      return null;
+    }
+    return new ConcertEventDetails(
+      event.id,
+      event.concertId,
+      event.startDate,
+      event.reservationDate,
+      event.maxSeatCapacity,
+      event.seats.map((seat) => {
+        return {
+          id: seat.id,
+          concertEventId: seat.concertEventId,
+          seatNumber: seat.seatNumber,
+          expirationDate: seat.expirationDate,
+          isPaid: seat.isPaid,
+          price: seat.price,
+        };
+      })
+    );
   }
 
   async findSeatBySeatIdWithLock(
