@@ -9,6 +9,7 @@ import { ReservationService } from "../../../domain/reservations/application/res
 import { ValidateTokenUsecase } from "../usecase/validate-token.usecase";
 import { CreateTokenUsecase } from "../usecase/create-token.usecase";
 import { GetAvailableConcertResourcesUsecase } from "../usecase/get-available-concert-resources.usecase";
+import { ReserveSeatUsecase } from "../usecase/reserve-seat.usecase";
 
 @Controller("reservations")
 export class ReservationsController {
@@ -16,7 +17,8 @@ export class ReservationsController {
     private readonly reservationService: ReservationService,
     private readonly validationTokenUsecase: ValidateTokenUsecase,
     private readonly createTokenUsecase: CreateTokenUsecase,
-    private readonly getAvailableConcertResourcesUsecase: GetAvailableConcertResourcesUsecase
+    private readonly getAvailableConcertResourcesUsecase: GetAvailableConcertResourcesUsecase,
+    private readonly reserveSeatUsecase: ReserveSeatUsecase
   ) {}
 
   /**
@@ -86,7 +88,7 @@ export class ReservationsController {
     @TypedParam("seatsId") seatsId: number,
     @TypedBody() reserveSeatReq: ReserveSeatReq
   ) {
-    return this.reservationService.reserveSeat(
+    return this.reserveSeatUsecase.execute(
       seatsId,
       reserveSeatReq.concertEventId,
       reserveSeatReq.userId

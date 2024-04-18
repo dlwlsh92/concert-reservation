@@ -15,6 +15,7 @@ import { GetAvailableConcertResourcesUsecase } from "./usecase/get-available-con
 import { PrismaService } from "../../database/prisma/prisma.service";
 import { IReservationWriteToken } from "../../domain/reservations/repositories/reservation-write.interface";
 import { ReservationWriteRepository } from "../../domain/reservations/infrastructure/persistence/reservation-write.repository";
+import { ReserveSeatUsecase } from "./usecase/reserve-seat.usecase";
 
 @Module({
   controllers: [ReservationsController],
@@ -26,6 +27,7 @@ import { ReservationWriteRepository } from "../../domain/reservations/infrastruc
     CreateTokenUsecase,
     AuthenticationService,
     GetAvailableConcertResourcesUsecase,
+    ReserveSeatUsecase,
     {
       provide: ITokenParameterStorageToken,
       useClass: TokenParameterRepository,

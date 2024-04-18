@@ -82,7 +82,7 @@ export class ReservationService {
         throw new HttpException("이미 결제된 좌석입니다.", 409);
       }
 
-      // 만료 일자는 현분재 시각으로부터 5분 후이다.
+      // 만료 일자는 현재 시각으로부터 5분 후이다.
       const reservationExpirationDate = getReservationExpirationDate();
       const updatedSeat = await this.reservationWriteRepository.reserveSeat(
         seatId,
