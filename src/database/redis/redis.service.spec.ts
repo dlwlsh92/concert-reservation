@@ -11,7 +11,7 @@ describe("redis 테스트 코드 작성", () => {
     const client = await redisService.getClient();
     await client.del("test");
     await client.del("test1");
-    client.quit();
+    await redisService.onModuleDestroy();
   });
 
   it("redisService가 정상적으로 생성되는가", () => {
