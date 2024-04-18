@@ -47,6 +47,10 @@ export class ReservationService {
       });
   }
 
+  async updateSeatPaidStatus(seatId: number, isPaid: boolean) {
+    return this.reservationWriteRepository.updateSeatPaidStatus(seatId, isPaid);
+  }
+
   async getAvailableSeats(concertEventId: number) {
     const concertEventDetails =
       await this.concertDetailsReaderRepository.getConcertEventDetails(

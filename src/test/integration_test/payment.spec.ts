@@ -82,9 +82,11 @@ describe("결제 usecase 테스트", () => {
       user.id
     );
     const order = await createPaymentUsecase.execute(reservation.id!);
+    const seat = await testUtil.getSeatById(seats[0].id);
 
     expect(order).toBeDefined();
     expect(order.userId).toBe(user.id);
     expect(order.reservationId).toBe(reservation.id);
+    expect(seat?.isPaid).toBe(true);
   });
 });

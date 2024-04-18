@@ -13,6 +13,11 @@ import { IPointReaderToken } from "../../domain/points/repositories/point-reader
 import { PointReaderRepository } from "../../domain/points/infrastructure/persistence/point-reader.repository";
 import { IPointWriteToken } from "../../domain/points/repositories/point-write.interface";
 import { PointWriteRepository } from "../../domain/points/infrastructure/persistence/point-write.repository";
+import { ReservationService } from "../../domain/reservations/application/reservation.service";
+import { IConcertDetailsReaderToken } from "../../domain/reservations/repositories/concert-details-reader.interface";
+import { ConcertDetailsReaderRepository } from "../../domain/reservations/infrastructure/persistence/concert-details-reader.repository";
+import { IReservationWriteToken } from "../../domain/reservations/repositories/reservation-write.interface";
+import { ReservationWriteRepository } from "../../domain/reservations/infrastructure/persistence/reservation-write.repository";
 
 @Module({
   controllers: [PaymentController],
@@ -22,6 +27,11 @@ import { PointWriteRepository } from "../../domain/points/infrastructure/persist
     CreatePaymentUsecase,
     PaymentValidationService,
     PointService,
+    ReservationService,
+    {
+      provide: IReservationWriteToken,
+      useClass: ReservationWriteRepository,
+    },
     {
       provide: IOrderRepositoryToken,
       useClass: OrderWriteRepository,
@@ -37,6 +47,10 @@ import { PointWriteRepository } from "../../domain/points/infrastructure/persist
     {
       provide: IPointWriteToken,
       useClass: PointWriteRepository,
+    },
+    {
+      provide: IConcertDetailsReaderToken,
+      useClass: ConcertDetailsReaderRepository,
     },
   ],
 })

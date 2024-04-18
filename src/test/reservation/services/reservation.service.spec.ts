@@ -24,6 +24,7 @@ describe("예약 관련 로직에 대한 단위 테스트", () => {
     reservationWriteRepository = {
       reserveSeat: jest.fn(),
       createReservation: jest.fn(),
+      updateSeatPaidStatus: jest.fn(),
     };
     prisma = new PrismaService();
     reservationService = new ReservationService(

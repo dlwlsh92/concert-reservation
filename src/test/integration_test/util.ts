@@ -16,6 +16,14 @@ export class TestUtil {
     });
   }
 
+  async getSeatById(seatId: number) {
+    return this.prisma.seat.findUnique({
+      where: {
+        id: seatId,
+      },
+    });
+  }
+
   async createUserWithPoint(point: number) {
     return this.prisma.user.create({
       data: {

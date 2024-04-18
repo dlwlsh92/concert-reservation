@@ -60,4 +60,28 @@ export class ReservationWriteRepository implements IReservationWrite {
           )
       );
   }
+
+  async updateSeatPaidStatus(
+    seatId: number,
+    isPaid: boolean,
+    tx?: PrismaTxType
+  ): Promise<SeatDetails> {
+    return (tx ?? this.prisma).seat
+      .update({
+        where: { id: seatId },
+        data: {
+          isPaid: isPaid,
+        },
+      })
+      .then((updatedSeat) => {
+        return {
+          id: updatedSeat.id,
+          concertEventId: updatedSeat.concertEventId,
+          seatNumber: updatedSeat.seatNumber,
+          expirationDate: updatedSeat.expirationDate,
+          isPaid: updatedSeat.isPaid,
+          price: updatedSeat.price,
+        };
+      });
+  }
 }
