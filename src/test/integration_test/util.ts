@@ -16,6 +16,16 @@ export class TestUtil {
     });
   }
 
+  async createUserWithPoint(point: number) {
+    return this.prisma.user.create({
+      data: {
+        name: "test",
+        point: point,
+        version: 0,
+      },
+    });
+  }
+
   async deleteUser(userId: number) {
     return this.prisma.user.delete({
       where: {
