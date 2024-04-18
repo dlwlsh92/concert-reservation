@@ -16,11 +16,13 @@ import { PrismaService } from "../../database/prisma/prisma.service";
 import { IReservationWriteToken } from "../../domain/reservations/repositories/reservation-write.interface";
 import { ReservationWriteRepository } from "../../domain/reservations/infrastructure/persistence/reservation-write.repository";
 import { ReserveSeatUsecase } from "./usecase/reserve-seat.usecase";
+import { RedisService } from "../../database/redis/redis.service";
 
 @Module({
   controllers: [ReservationsController],
   providers: [
     PrismaService,
+    RedisService,
     TokenManagementService,
     ReservationService,
     ValidateTokenUsecase,
