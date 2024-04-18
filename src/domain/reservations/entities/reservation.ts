@@ -11,10 +11,10 @@ export enum PaymentEligibilityStatus {
 export class Reservation {
   private readonly currentTime: Date;
   constructor(
-    public readonly id: number,
+    public readonly id: number | null,
     public readonly userId: number,
     public readonly concertEventId: number,
-    public readonly seatNumber: number,
+    public readonly seatId: number,
     public readonly price: number,
     public readonly expirationDate: Date,
     public readonly status: ReservationStatus
@@ -41,3 +41,9 @@ export class Reservation {
     return this.status === "confirmed";
   }
 }
+
+export const getReservationExpirationDate = (): Date => {
+  const currentTime = new Date();
+  currentTime.setMinutes(currentTime.getMinutes() + 5);
+  return currentTime;
+};

@@ -1,5 +1,17 @@
 import { SeatDetails } from "../entities/concert-event-details";
+import { PrismaTxType } from "../../../database/prisma/prisma.type";
+import { Reservation } from "../entities/reservation";
 
-export interface ReservationWrite {
-  reserveSeat(seatId: number): Promise<SeatDetails | null>;
+export const IReservationWriteToken = Symbol("IReservationWrite");
+
+export interface IReservationWrite {
+  reserveSeat(
+    seatId: number,
+    reservationExpirationDate: Date,
+    tx?: PrismaTxType
+  ): Promise<SeatDetails | null>;
+  createReservation(
+    reservation: Reservation,
+    tx?: PrismaTxType
+  ): Promise<Reservation>;
 }

@@ -4,12 +4,22 @@ import {
   IConcertDetailsReaderToken,
 } from "../repositories/concert-details-reader.interface";
 import { PrismaService } from "../../../database/prisma/prisma.service";
+import {
+  getReservationExpirationDate,
+  Reservation,
+} from "../entities/reservation";
+import {
+  IReservationWrite,
+  IReservationWriteToken,
+} from "../repositories/reservation-write.interface";
 
 @Injectable()
 export class ReservationService {
   constructor(
     @Inject(IConcertDetailsReaderToken)
     private readonly concertDetailsReaderRepository: IConcertDetailsReader,
+    @Inject(IReservationWriteToken)
+    private readonly reservationWriteRepository: IReservationWrite,
     private readonly prisma: PrismaService
   ) {}
 
@@ -73,6 +83,31 @@ export class ReservationService {
       }
 
       // 만료 일자는 현분재 시각으로부터 5분 후이다.
+      const reservationExpirationDate = getReservationExpirationDate();
+      const updatedSeat = await this.reservationWriteRepository.reserveSeat(
+        seatId,
+        reservationExpirationDate,
+        tx
+      );
+
+      if (updatedSeat === null) {
+        throw new HttpException("예약에 실패했습니다.", 500);
+      }
+
+      const reservation =
+        await this.reservationWriteRepository.createReservation(
+          new Reservation(
+            null,
+            userId,
+            concertEventId,
+            seatId,
+            updatedSeat.price,
+            reservationExpirationDate,
+            "pending"
+          ),
+          tx
+        );
+      return reservation;
     });
   }
 }

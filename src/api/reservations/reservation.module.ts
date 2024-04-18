@@ -13,6 +13,8 @@ import { CreateTokenUsecase } from "./usecase/create-token.usecase";
 import { AuthenticationService } from "../../domain/reservations/application/authentication.service";
 import { GetAvailableConcertResourcesUsecase } from "./usecase/get-available-concert-resources.usecase";
 import { PrismaService } from "../../database/prisma/prisma.service";
+import { IReservationWriteToken } from "../../domain/reservations/repositories/reservation-write.interface";
+import { ReservationWriteRepository } from "../../domain/reservations/infrastructure/persistence/reservation-write.repository";
 
 @Module({
   controllers: [ReservationsController],
@@ -35,6 +37,10 @@ import { PrismaService } from "../../database/prisma/prisma.service";
     {
       provide: IReservationReaderRepositoryToken,
       useClass: ReservationReaderRepository,
+    },
+    {
+      provide: IReservationWriteToken,
+      useClass: ReservationWriteRepository,
     },
   ],
 })
