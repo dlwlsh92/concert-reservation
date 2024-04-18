@@ -1,5 +1,5 @@
-import { ConcertEventDetails } from "../../reservations/domain/concert-event-details";
 import { addHoursToCurrentTime } from "../utils";
+import { ConcertEventDetails } from "../../domain/reservations/entities/concert-event-details";
 
 describe("콘서트 관련 정보 조회 테스트 로직", () => {
   it("콘서트 시작 날짜가 지난 경우 isConcertStarted는 true를 반환한다.", () => {

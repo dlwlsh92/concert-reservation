@@ -1,5 +1,5 @@
-import { ITokenParameterStorage } from "../../reservations/domain/interfaces/token-parameter-storage.interface";
-import { Token } from "../../reservations/domain/token";
+import { ITokenParameterStorage } from "../../domain/reservations/repositories/token-parameter-storage.interface";
+import { Token } from "../../domain/reservations/entities/token";
 
 export class TokenParameterStorageStub implements ITokenParameterStorage {
   waitingCount: number = 0;

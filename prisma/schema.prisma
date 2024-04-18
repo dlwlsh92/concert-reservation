@@ -44,7 +44,7 @@ model Seat {
   id              Int       @id @default(autoincrement())
   concertEventId  Int
   seatNumber      Int
-  expirationDate     DateTime @default("9999-01-01T00:00:00Z")
+  expirationDate     DateTime
   isPaid         Boolean   @default(false)
   price           Int
   concertEvent    ConcertEvent @relation(fields: [concertEventId], references: [id])
@@ -54,7 +54,6 @@ model Seat {
 enum ReservationStatus {
   pending
   confirmed
-  expired
 }
 
 model Reservation {
