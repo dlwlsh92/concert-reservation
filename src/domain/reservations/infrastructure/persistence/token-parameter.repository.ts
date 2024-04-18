@@ -29,7 +29,6 @@ export class TokenParameterRepository implements ITokenParameterStorage {
   }
 
   async getWaitingCount() {
-    // TODO: Implement this method
     // redis에 저장된 waitingCount를 조회하여 반환한다.
     const waitingCount = await this.redisService.get("waitingCount");
     if (!waitingCount) return 0;
@@ -37,7 +36,6 @@ export class TokenParameterRepository implements ITokenParameterStorage {
   }
 
   async addWaitingCount() {
-    // TODO: Implement this method
     // redis에 저장된 waitingCount를 1 증가시킨다.
     // 만일 redis에 waitingCount가 없다면 1로 초기화 한다.
     // addWaitingCount가 호출될때마다 ttl을 지금으로부터 5분으로 설정한다.

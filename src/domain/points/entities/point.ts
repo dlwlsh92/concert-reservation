@@ -9,7 +9,11 @@ interface Response {
 }
 
 export class Point {
-  constructor(public userId: number, public point: number) {}
+  constructor(
+    public userId: number,
+    public point: number,
+    public version?: number
+  ) {}
 
   add(amount: number): Response {
     this.point += amount;
@@ -34,9 +38,5 @@ export class Point {
       point: this.point,
       statusMessage: StatusMessage.Success,
     };
-  }
-
-  getPoint() {
-    return this.point;
   }
 }

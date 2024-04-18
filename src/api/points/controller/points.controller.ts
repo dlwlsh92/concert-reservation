@@ -2,10 +2,16 @@ import { Controller, Get, Post } from "@nestjs/common";
 import { TypedBody, TypedParam } from "@nestia/core";
 import { ChargePointReq } from "./dto/charge-point.req";
 import { PointService } from "../../../domain/points/application/point.service";
+import { GetPointUsecase } from "../usecase/get-point.usecase";
+import { ChargePointUsecase } from "../usecase/charge-point.usecase";
 
 @Controller("points")
 export class PointsController {
-  constructor(private readonly pointService: PointService) {}
+  constructor(
+    private readonly pointService: PointService,
+    private readonly getPointUseCase: GetPointUsecase,
+    private readonly chargePointUsecase: ChargePointUsecase
+  ) {}
   /**
    * 포인트 조회.
    * @param userId 유저 ID
@@ -14,7 +20,7 @@ export class PointsController {
    * */
   @Get("users/:userId")
   async getPoints(@TypedParam("userId") userId: number) {
-    return this.pointService.getPoints(userId);
+    return this.getPointUseCase.execute(userId);
   }
 
   /**
@@ -29,6 +35,6 @@ export class PointsController {
     @TypedParam("userId") userId: number,
     @TypedBody() chargeAmountReq: ChargePointReq
   ) {
-    return this.pointService.addPoints(userId, chargeAmountReq.amount);
+    return this.chargePointUsecase.execute(userId, chargeAmountReq.amount);
   }
 }
