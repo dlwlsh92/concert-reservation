@@ -91,7 +91,7 @@ export class ReservationService {
       );
 
       if (updatedSeat === null) {
-        throw new HttpException("예약에 실패했습니다.", 500);
+        throw new HttpException("좌석 예약에 실패했습니다.", 500);
       }
 
       const reservation =
