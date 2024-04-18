@@ -1,10 +1,10 @@
 import { Controller, Post } from "@nestjs/common";
 import { TypedParam } from "@nestia/core";
-import { PaymentService } from "../../../domain/payment/application/payment.service";
+import { CreatePaymentUsecase } from "../usecase/create-payment.usecase";
 
 @Controller("payment")
 export class PaymentController {
-  constructor(private readonly paymentService: PaymentService) {}
+  constructor(private readonly createPaymentUsecase: CreatePaymentUsecase) {}
   /**
    * 좌석 결제 요청.
    * @param reservationId 예약 ID
@@ -19,6 +19,6 @@ export class PaymentController {
   @Post(":reservationId")
   async createPayment(@TypedParam("reservationId") reservationId: number) {
     // TODO: Implement this method
-    return this.paymentService.payReservation(reservationId);
+    return this.createPaymentUsecase.execute(reservationId);
   }
 }
