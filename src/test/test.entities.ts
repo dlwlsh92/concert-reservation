@@ -1,7 +1,7 @@
 import {
+  Reservation,
   ReservationStatus,
-  ReservationValidator,
-} from "../payment/domain/reservation-validator";
+} from "../reservations/domain/reservation";
 import { addHoursToCurrentTime } from "./utils";
 import {
   ConcertEventDetails,
@@ -9,8 +9,8 @@ import {
 } from "../reservations/domain/concert-event-details";
 
 export const reservationMockData = (
-  reservation: Partial<ReservationValidator>
-): ReservationValidator => {
+  reservation: Partial<Reservation>
+): Reservation => {
   const doc = {
     id: 1,
     userId: 1,
@@ -23,7 +23,7 @@ export const reservationMockData = (
     status: "pending",
     ...reservation,
   };
-  return new ReservationValidator(
+  return new Reservation(
     doc.id,
     doc.userId,
     doc.concertEventId,

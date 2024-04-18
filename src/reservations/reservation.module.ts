@@ -6,6 +6,8 @@ import { TokenParameterRepository } from "./infrastructure/persistence/token-par
 import { ReservationService } from "./application/reservation.service";
 import { IConcertDetailsToken } from "./domain/interfaces/concert-details.interface";
 import { ConcertDetailsRepository } from "./infrastructure/persistence/concert-details.repository";
+import { IReservationQueryRepositoryToken } from "./domain/interfaces/reservation-query-repository.interface";
+import { ReservationQueryRepository } from "./infrastructure/persistence/reservation-query.repository";
 
 @Module({
   controllers: [ReservationsController],
@@ -19,6 +21,10 @@ import { ConcertDetailsRepository } from "./infrastructure/persistence/concert-d
     {
       provide: IConcertDetailsToken,
       useClass: ConcertDetailsRepository,
+    },
+    {
+      provide: IReservationQueryRepositoryToken,
+      useClass: ReservationQueryRepository,
     },
   ],
 })

@@ -1,6 +1,6 @@
 import { reservationMockData } from "../test.entities";
 import { addHoursToCurrentTime } from "../utils";
-import { PaymentEligibilityStatus } from "../../payment/domain/reservation-validator";
+import { PaymentEligibilityStatus } from "../../reservations/domain/reservation";
 
 describe("예약 관련 로직에 대한 단위 테스트", () => {
   describe("결제 전 예약이 유효한지 확인하는 로직에 대한 단위 테스트", () => {

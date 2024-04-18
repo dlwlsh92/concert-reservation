@@ -8,7 +8,7 @@ export enum PaymentEligibilityStatus {
   ReservationConfirmed = "ReservationConfirmed",
 }
 
-export class ReservationValidator {
+export class Reservation {
   private readonly currentTime: Date;
   constructor(
     public readonly id: number,

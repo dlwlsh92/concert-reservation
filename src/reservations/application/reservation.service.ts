@@ -5,13 +5,20 @@ import {
   IConcertDetails,
   IConcertDetailsToken,
 } from "../domain/interfaces/concert-details.interface";
+import {
+  IReservationQueryRepository,
+  IReservationQueryRepositoryToken,
+} from "../domain/interfaces/reservation-query-repository.interface";
+import { PaymentEligibilityStatus } from "../domain/reservation";
 
 @Injectable()
 export class ReservationService {
   constructor(
     private readonly tokenManagementService: TokenManagementService,
     @Inject(IConcertDetailsToken)
-    private readonly concertDetailsRepository: IConcertDetails
+    private readonly concertDetailsRepository: IConcertDetails,
+    @Inject(IReservationQueryRepositoryToken)
+    private readonly reservationQueryRepository: IReservationQueryRepository
   ) {}
 
   async createToken() {
@@ -59,6 +66,25 @@ export class ReservationService {
             filteredConcertEventDetail.maxSeatCapacity - availableSeats.length,
         };
       });
+  }
+
+  async validateReservationForPayment(reservationId: number) {
+    const reservation =
+      await this.reservationQueryRepository.findReservationById(reservationId);
+    if (reservation === null) {
+      throw new HttpException("예약이 존재하지 않습니다.", 404);
+    }
+    const paymentEligibleStatus = reservation.isPaymentEligible();
+    switch (paymentEligibleStatus) {
+      case PaymentEligibilityStatus.ReservationExpired:
+        throw new HttpException("Reservation expired", 410);
+      case PaymentEligibilityStatus.ReservationConfirmed:
+        throw new HttpException("Reservation already confirmed", 409);
+      case PaymentEligibilityStatus.SeatExpired:
+        throw new HttpException("Seat expired", 403);
+      default:
+        return reservation;
+    }
   }
 
   async getAvailableSeats(concertEventId: number) {
