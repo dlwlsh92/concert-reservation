@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { PointWriteInterface } from "../../repositories/point-write.interface";
-import { Point } from "../../entities/point";
-import { PrismaService } from "../../../../database/prisma/prisma.service";
-import { PrismaTxType } from "../../../../database/prisma/prisma.type";
+import { PointWriteInterface } from "../../../domain/points/repositories/point-write.interface";
+import { Point } from "../../../domain/points/entities/point";
+import { PrismaService } from "../../../database/prisma/prisma.service";
+import { PrismaTxType } from "../../../database/prisma/prisma.type";
 
 @Injectable()
 export class PointWriteRepository implements PointWriteInterface {

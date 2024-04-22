@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
-import { ITokenParameterStorage } from "../../repositories/token-parameter-storage.interface";
-import { Token } from "../../entities/token";
-import { RedisService } from "../../../../database/redis/redis.service";
+import { ITokenParameterStorage } from "../../../domain/reservations/repositories/token-parameter-storage.interface";
+import { Token } from "../../../domain/reservations/entities/token";
+import { RedisService } from "../../../database/redis/redis.service";
 
 @Injectable()
 export class TokenParameterRepository implements ITokenParameterStorage {

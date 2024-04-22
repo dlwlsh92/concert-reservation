@@ -1,9 +1,9 @@
 import { PointService } from "../../domain/points/application/point.service";
 import { Test, TestingModule } from "@nestjs/testing";
 import { IPointReaderToken } from "../../domain/points/repositories/point-reader.interface";
-import { PointReaderRepository } from "../../domain/points/infrastructure/persistence/point-reader.repository";
+import { PointReaderRepository } from "../../infrastructure/point/persistence/point-reader.repository";
 import { IPointWriteToken } from "../../domain/points/repositories/point-write.interface";
-import { PointWriteRepository } from "../../domain/points/infrastructure/persistence/point-write.repository";
+import { PointWriteRepository } from "../../infrastructure/point/persistence/point-write.repository";
 import { PrismaService } from "../../database/prisma/prisma.service";
 import { TestUtil } from "./util";
 import { Point } from "../../domain/points/entities/point";

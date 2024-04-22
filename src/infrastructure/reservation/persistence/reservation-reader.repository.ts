@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
-import { IReservationReaderRepository } from "../../repositories/reservation-reader.interface";
-import { PrismaService } from "../../../../database/prisma/prisma.service";
-import { Reservation } from "../../entities/reservation";
+import { IReservationReaderRepository } from "../../../domain/reservations/repositories/reservation-reader.interface";
+import { PrismaService } from "../../../database/prisma/prisma.service";
+import { Reservation } from "../../../domain/reservations/entities/reservation";
 
 @Injectable()
 export class ReservationReaderRepository
