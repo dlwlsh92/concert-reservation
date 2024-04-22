@@ -1,17 +1,20 @@
 import { RedisService } from "./redis.service";
+import { ConfigService } from "@nestjs/config";
 
 describe("redis 테스트 코드 작성", () => {
   let redisService: RedisService;
+  let configService: ConfigService;
 
   beforeAll(() => {
-    redisService = new RedisService();
+    configService = new ConfigService();
+    redisService = new RedisService(configService);
   });
 
   afterAll(async () => {
     const client = await redisService.getClient();
     await client.del("test");
     await client.del("test1");
-    await redisService.onModuleDestroy();
+    redisService.onModuleDestroy();
   });
 
   it("redisService가 정상적으로 생성되는가", () => {

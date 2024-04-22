@@ -9,6 +9,7 @@ import { TestUtil } from "./util";
 import { Test, TestingModule } from "@nestjs/testing";
 import { PrismaService } from "../../database/prisma/prisma.service";
 import { AuthenticationService } from "../../domain/reservations/application/authentication.service";
+import { ConfigService } from "@nestjs/config";
 
 describe("예약 서비스를 이용할 수 있는 대기열이 정상적으로 작동하는지 확인함.", () => {
   let tokenParameterStorage: ITokenParameterStorage;
@@ -19,6 +20,7 @@ describe("예약 서비스를 이용할 수 있는 대기열이 정상적으로 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
+        ConfigService,
         PrismaService,
         TokenManagementService,
         AuthenticationService,
@@ -62,9 +64,6 @@ describe("예약 서비스를 이용할 수 있는 대기열이 정상적으로 
 
     const result1 = await authenticationService.validateToken(firstToken);
     const result2 = await authenticationService.validateToken(lastToken);
-
-    console.log(result2);
-
     expect(result1.status).toBe("available");
     expect(result2.status).toBe("pending");
   });
