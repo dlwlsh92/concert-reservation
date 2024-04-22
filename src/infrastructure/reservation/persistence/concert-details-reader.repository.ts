@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { IConcertDetailsReader } from "../../repositories/concert-details-reader.interface";
+import { IConcertDetailsReader } from "../../../domain/reservations/repositories/concert-details-reader.interface";
 import {
   ConcertEventDetails,
   SeatDetails,
-} from "../../entities/concert-event-details";
-import { PrismaTxType } from "../../../../database/prisma/prisma.type";
-import { PrismaService } from "../../../../database/prisma/prisma.service";
+} from "../../../domain/reservations/entities/concert-event-details";
+import { PrismaTxType } from "../../../database/prisma/prisma.type";
+import { PrismaService } from "../../../database/prisma/prisma.service";
 
 @Injectable()
 export class ConcertDetailsReaderRepository implements IConcertDetailsReader {

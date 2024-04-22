@@ -1,9 +1,9 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { ReservationService } from "../../domain/reservations/application/reservation.service";
 import { IConcertDetailsReaderToken } from "../../domain/reservations/repositories/concert-details-reader.interface";
-import { ConcertDetailsReaderRepository } from "../../domain/reservations/infrastructure/persistence/concert-details-reader.repository";
+import { ConcertDetailsReaderRepository } from "../../infrastructure/reservation/persistence/concert-details-reader.repository";
 import { IReservationWriteToken } from "../../domain/reservations/repositories/reservation-write.interface";
-import { ReservationWriteRepository } from "../../domain/reservations/infrastructure/persistence/reservation-write.repository";
+import { ReservationWriteRepository } from "../../infrastructure/reservation/persistence/reservation-write.repository";
 import { PrismaService } from "../../database/prisma/prisma.service";
 import { TestUtil } from "./util";
 
