@@ -1,9 +1,9 @@
-import { Injectable } from "@nestjs/common";
-import { IReservationWrite } from "../../../domain/reservations/repositories/reservation-write.interface";
-import { SeatDetails } from "../../../domain/reservations/entities/concert-event-details";
-import { PrismaTxType } from "../../../database/prisma/prisma.type";
-import { PrismaService } from "../../../database/prisma/prisma.service";
-import { Reservation } from "../../../domain/reservations/entities/reservation";
+import { Injectable } from '@nestjs/common';
+import { IReservationWrite } from '../../../domain/reservations/repositories/reservation-write.interface';
+import { SeatDetails } from '../../../domain/reservations/entities/concert-event-details';
+import { PrismaTxType } from '../../../database/prisma/prisma.type';
+import { PrismaService } from '../../../database/prisma/prisma.service';
+import { Reservation } from '../../../domain/reservations/entities/reservation';
 
 @Injectable()
 export class ReservationWriteRepository implements IReservationWrite {

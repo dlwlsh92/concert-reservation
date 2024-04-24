@@ -1,7 +1,7 @@
-import { Reservation } from "../entities/reservation";
+import { Reservation } from '../entities/reservation';
 
 export const IReservationReaderRepositoryToken = Symbol(
-  "IReservationReaderRepository"
+  'IReservationReaderRepository'
 );
 
 export interface IReservationReaderRepository {

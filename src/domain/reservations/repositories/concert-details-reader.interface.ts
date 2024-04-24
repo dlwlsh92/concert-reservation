@@ -1,10 +1,10 @@
 import {
   ConcertEventDetails,
   SeatDetails,
-} from "../entities/concert-event-details";
-import { PrismaTxType } from "../../../database/prisma/prisma.type";
+} from '../entities/concert-event-details';
+import { PrismaTxType } from '../../../database/prisma/prisma.type';
 
-export const IConcertDetailsReaderToken = Symbol("IConcertDetailsReader");
+export const IConcertDetailsReaderToken = Symbol('IConcertDetailsReader');
 
 export interface IConcertDetailsReader {
   getUpcomingConcertEventDetails(

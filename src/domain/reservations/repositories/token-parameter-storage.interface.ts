@@ -1,6 +1,6 @@
-import { Token } from "../entities/token";
+import { Token } from '../entities/token';
 
-export const ITokenParameterStorageToken = Symbol("TokenParameterStorage");
+export const ITokenParameterStorageToken = Symbol('TokenParameterStorage');
 export interface ITokenParameterStorage {
   getToken(token: string): Promise<Token | null>;
   setToken(

@@ -1,5 +1,5 @@
-import { Injectable } from "@nestjs/common";
-import { ReservationService } from "../../../domain/reservations/application/reservation.service";
+import { Injectable } from '@nestjs/common';
+import { ReservationService } from '../../../domain/reservations/application/reservation.service';
 
 @Injectable()
 export class GetAvailableConcertResourcesUsecase {

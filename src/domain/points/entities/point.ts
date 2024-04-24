@@ -1,6 +1,6 @@
 export enum StatusMessage {
-  NotEnoughPoint = "NotEnoughPoint",
-  Success = "Success",
+  NotEnoughPoint = 'NotEnoughPoint',
+  Success = 'Success',
 }
 interface Response {
   status: boolean;

@@ -1,11 +1,11 @@
-export type ReservationStatus = "pending" | "confirmed";
+export type ReservationStatus = 'pending' | 'confirmed';
 
 export enum PaymentEligibilityStatus {
-  Eligible = "Eligible",
-  SeatExpired = "SeatExpired",
-  ConcertAlreadyStarted = "ConcertAlreadyStarted",
-  ReservationExpired = "ReservationExpired",
-  ReservationConfirmed = "ReservationConfirmed",
+  Eligible = 'Eligible',
+  SeatExpired = 'SeatExpired',
+  ConcertAlreadyStarted = 'ConcertAlreadyStarted',
+  ReservationExpired = 'ReservationExpired',
+  ReservationConfirmed = 'ReservationConfirmed',
 }
 
 export class Reservation {
@@ -38,7 +38,7 @@ export class Reservation {
 
   isConfirmed(): boolean {
     // 이미 결제가 완료된 예약인지 확인
-    return this.status === "confirmed";
+    return this.status === 'confirmed';
   }
 }
 

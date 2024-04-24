@@ -1,18 +1,18 @@
-import { Test, TestingModule } from "@nestjs/testing";
-import { ReservationService } from "../../domain/reservations/application/reservation.service";
-import { IConcertDetailsReaderToken } from "../../domain/reservations/repositories/concert-details-reader.interface";
-import { ConcertDetailsReaderRepository } from "../../infrastructure/reservation/persistence/concert-details-reader.repository";
-import { IReservationWriteToken } from "../../domain/reservations/repositories/reservation-write.interface";
-import { ReservationWriteRepository } from "../../infrastructure/reservation/persistence/reservation-write.repository";
-import { PrismaService } from "../../database/prisma/prisma.service";
-import { TestUtil } from "./util";
+import { Test, TestingModule } from '@nestjs/testing';
+import { ReservationService } from '../../domain/reservations/application/reservation.service';
+import { IConcertDetailsReaderToken } from '../../domain/reservations/repositories/concert-details-reader.interface';
+import { ConcertDetailsReaderRepository } from '../../infrastructure/reservation/persistence/concert-details-reader.repository';
+import { IReservationWriteToken } from '../../domain/reservations/repositories/reservation-write.interface';
+import { ReservationWriteRepository } from '../../infrastructure/reservation/persistence/reservation-write.repository';
+import { PrismaService } from '../../database/prisma/prisma.service';
+import { TestUtil } from './util';
 
-describe("좌석 예약 관련 테스트", () => {
+describe('좌석 예약 관련 테스트', () => {
   let reservationService: ReservationService;
   let testUtil: TestUtil;
 
   beforeAll(async () => {
-    let module: TestingModule = await Test.createTestingModule({
+    const module: TestingModule = await Test.createTestingModule({
       providers: [
         ReservationService,
         {
@@ -31,7 +31,7 @@ describe("좌석 예약 관련 테스트", () => {
     testUtil = module.get<TestUtil>(TestUtil);
   });
 
-  it("동일한 좌석은 한 사람만 예약할 수 있다.", async () => {
+  it('동일한 좌석은 한 사람만 예약할 수 있다.', async () => {
     const concert = await testUtil.createConcert();
     const concertEvent = await testUtil.createConcertEvent(concert.id, 3);
 
@@ -54,7 +54,7 @@ describe("좌석 예약 관련 테스트", () => {
     });
     const reservationSeats = await Promise.allSettled(reservationSeatPromise);
     const successReservations = reservationSeats.filter(
-      (result) => result.status === "fulfilled"
+      (result) => result.status === 'fulfilled'
     );
     expect(successReservations.length).toBe(1);
   });

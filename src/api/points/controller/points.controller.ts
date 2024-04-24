@@ -1,10 +1,10 @@
-import { Controller, Get, Post } from "@nestjs/common";
-import { TypedBody, TypedParam } from "@nestia/core";
-import { ChargePointReq } from "./dto/charge-point.req";
-import { GetPointUsecase } from "../usecase/get-point.usecase";
-import { ChargePointUsecase } from "../usecase/charge-point.usecase";
+import { Controller, Get, Post } from '@nestjs/common';
+import { TypedBody, TypedParam } from '@nestia/core';
+import { ChargePointReq } from './dto/charge-point.req';
+import { GetPointUsecase } from '../usecase/get-point.usecase';
+import { ChargePointUsecase } from '../usecase/charge-point.usecase';
 
-@Controller("points")
+@Controller('points')
 export class PointsController {
   constructor(
     private readonly getPointUseCase: GetPointUsecase,
@@ -16,8 +16,8 @@ export class PointsController {
    * @tag point
    * @return 업데이트된 포인트
    * */
-  @Get("users/:userId")
-  async getPoints(@TypedParam("userId") userId: number) {
+  @Get('users/:userId')
+  async getPoints(@TypedParam('userId') userId: number) {
     return this.getPointUseCase.execute(userId);
   }
 
@@ -28,9 +28,9 @@ export class PointsController {
    * @tag point
    * @return 업데이트된 포인트
    * */
-  @Post("users/:userId/charge")
+  @Post('users/:userId/charge')
   async chargePoints(
-    @TypedParam("userId") userId: number,
+    @TypedParam('userId') userId: number,
     @TypedBody() chargeAmountReq: ChargePointReq
   ) {
     return this.chargePointUsecase.execute(userId, chargeAmountReq.amount);

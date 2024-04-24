@@ -1,6 +1,6 @@
-import { Controller } from "@nestjs/common";
-import { AppService } from "./app.service";
-import { TypedRoute } from "@nestia/core";
+import { Controller } from '@nestjs/common';
+import { AppService } from './app.service';
+import { TypedRoute } from '@nestia/core';
 
 @Controller()
 export class AppController {

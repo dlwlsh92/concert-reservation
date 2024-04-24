@@ -1,5 +1,5 @@
-import { Injectable } from "@nestjs/common";
-import { AuthenticationService } from "../../../domain/reservations/application/authentication.service";
+import { Injectable } from '@nestjs/common';
+import { AuthenticationService } from '../../../domain/reservations/application/authentication.service';
 
 @Injectable()
 export class CreateTokenUsecase {

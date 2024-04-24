@@ -1,17 +1,17 @@
-import { HttpException, Inject, Injectable } from "@nestjs/common";
+import { HttpException, Inject, Injectable } from '@nestjs/common';
 import {
   IConcertDetailsReader,
   IConcertDetailsReaderToken,
-} from "../repositories/concert-details-reader.interface";
-import { PrismaService } from "../../../database/prisma/prisma.service";
+} from '../repositories/concert-details-reader.interface';
+import { PrismaService } from '../../../database/prisma/prisma.service';
 import {
   getReservationExpirationDate,
   Reservation,
-} from "../entities/reservation";
+} from '../entities/reservation';
 import {
   IReservationWrite,
   IReservationWriteToken,
-} from "../repositories/reservation-write.interface";
+} from '../repositories/reservation-write.interface';
 
 @Injectable()
 export class ReservationService {
@@ -57,7 +57,7 @@ export class ReservationService {
         concertEventId
       );
     if (concertEventDetails === null) {
-      throw new HttpException("콘서트 이벤트가 존재하지 않습니다.", 404);
+      throw new HttpException('콘서트 이벤트가 존재하지 않습니다.', 404);
     }
     return concertEventDetails.getAvailableSeats().map((seat) => {
       return {
@@ -75,15 +75,15 @@ export class ReservationService {
           tx
         );
       if (seatDetails === null) {
-        throw new HttpException("좌석이 존재하지 않습니다.", 404);
+        throw new HttpException('좌석이 존재하지 않습니다.', 404);
       }
 
       if (seatDetails.expirationDate > new Date()) {
-        throw new HttpException("이미 예약된 좌석입니다.", 409);
+        throw new HttpException('이미 예약된 좌석입니다.', 409);
       }
 
       if (seatDetails.isPaid === true) {
-        throw new HttpException("이미 결제된 좌석입니다.", 409);
+        throw new HttpException('이미 결제된 좌석입니다.', 409);
       }
 
       // 만료 일자는 현재 시각으로부터 5분 후이다.
@@ -95,7 +95,7 @@ export class ReservationService {
       );
 
       if (updatedSeat === null) {
-        throw new HttpException("좌석 예약에 실패했습니다.", 500);
+        throw new HttpException('좌석 예약에 실패했습니다.', 500);
       }
 
       const reservation =
@@ -107,7 +107,7 @@ export class ReservationService {
             seatId,
             updatedSeat.price,
             reservationExpirationDate,
-            "pending"
+            'pending'
           ),
           tx
         );

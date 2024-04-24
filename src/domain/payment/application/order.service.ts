@@ -1,9 +1,9 @@
-import { Inject, Injectable } from "@nestjs/common";
-import { Order } from "../entities/order";
+import { Inject, Injectable } from '@nestjs/common';
+import { Order } from '../entities/order';
 import {
   IOrderRepositoryToken,
   IOrderWriteRepository,
-} from "../repositories/order-write.interface";
+} from '../repositories/order-write.interface';
 
 @Injectable()
 export class OrderService {
