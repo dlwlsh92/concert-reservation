@@ -1,7 +1,7 @@
 const dotenv = require('dotenv');
 
 // 환경 변수 설정을 불러옵니다.
-dotenv.config({ path: './env/.env.development' });
+dotenv.config({ path: './env/.env.local' });
 
 module.exports = {
   moduleFileExtensions: ['js', 'json', 'ts'],
