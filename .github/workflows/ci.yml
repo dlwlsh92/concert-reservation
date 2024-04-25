@@ -28,6 +28,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2 # Checks out the repository content
 
+      - run: |
+          echo "DATABASE_URL=$DATABASE_URL" >> .env
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL}}
+
       - name: Set up Node.js
         uses: actions/setup-node@v2 # Sets up Node.js environment
         with:
