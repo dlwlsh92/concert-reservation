@@ -1,6 +1,6 @@
-import { Order } from "../entities/order";
+import { Order } from '../entities/order';
 
-export const IOrderRepositoryToken = Symbol("IOrderRepository");
+export const IOrderRepositoryToken = Symbol('IOrderRepository');
 
 export interface IOrderWriteRepository {
   createOrder(

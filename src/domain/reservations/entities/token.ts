@@ -1,6 +1,6 @@
 export enum TokenStatus {
-  pending = "pending",
-  available = "available",
+  pending = 'pending',
+  available = 'available',
 }
 
 export type ValidationResponse = {

@@ -1,6 +1,6 @@
-import { PrismaService } from "../../database/prisma/prisma.service";
-import { Injectable } from "@nestjs/common";
-import { addHoursToCurrentTime } from "../utils";
+import { PrismaService } from '../../database/prisma/prisma.service';
+import { Injectable } from '@nestjs/common';
+import { addHoursToCurrentTime } from '../utils';
 
 @Injectable()
 export class TestUtil {
@@ -9,7 +9,7 @@ export class TestUtil {
   async createUser() {
     return this.prisma.user.create({
       data: {
-        name: "test",
+        name: 'test',
         point: 0,
         version: 0,
       },
@@ -27,7 +27,7 @@ export class TestUtil {
   async createUserWithPoint(point: number) {
     return this.prisma.user.create({
       data: {
-        name: "test",
+        name: 'test',
         point: point,
         version: 0,
       },
@@ -45,7 +45,7 @@ export class TestUtil {
   async createConcert() {
     return this.prisma.concert.create({
       data: {
-        concertName: "test",
+        concertName: 'test',
       },
     });
   }

@@ -1,17 +1,17 @@
 import {
   ITokenParameterStorage,
   ITokenParameterStorageToken,
-} from "../../domain/reservations/repositories/token-parameter-storage.interface";
-import { TokenManagementService } from "../../domain/reservations/application/token-management.service";
-import { TokenParameterRepository } from "../../infrastructure/reservation/persistence/token-parameter.repository";
-import { RedisService } from "../../database/redis/redis.service";
-import { TestUtil } from "./util";
-import { Test, TestingModule } from "@nestjs/testing";
-import { PrismaService } from "../../database/prisma/prisma.service";
-import { AuthenticationService } from "../../domain/reservations/application/authentication.service";
-import { ConfigService } from "@nestjs/config";
+} from '../../domain/reservations/repositories/token-parameter-storage.interface';
+import { TokenManagementService } from '../../domain/reservations/application/token-management.service';
+import { TokenParameterRepository } from '../../infrastructure/reservation/persistence/token-parameter.repository';
+import { RedisService } from '../../database/redis/redis.service';
+import { TestUtil } from './util';
+import { Test, TestingModule } from '@nestjs/testing';
+import { PrismaService } from '../../database/prisma/prisma.service';
+import { AuthenticationService } from '../../domain/reservations/application/authentication.service';
+import { ConfigService } from '@nestjs/config';
 
-describe("예약 서비스를 이용할 수 있는 대기열이 정상적으로 작동하는지 확인함.", () => {
+describe('예약 서비스를 이용할 수 있는 대기열이 정상적으로 작동하는지 확인함.', () => {
   let tokenParameterStorage: ITokenParameterStorage;
   let tokenManagementService: TokenManagementService;
   let authenticationService: AuthenticationService;
@@ -49,7 +49,7 @@ describe("예약 서비스를 이용할 수 있는 대기열이 정상적으로 
     await redis.flushall();
   });
 
-  it("대기열이 정상적으로 작동하는지 확인", async () => {
+  it('대기열이 정상적으로 작동하는지 확인', async () => {
     const tokens: string[] = [];
     // 4개의 토큰을 생성
     for (let i = 0; i < 4; i++) {
@@ -64,7 +64,7 @@ describe("예약 서비스를 이용할 수 있는 대기열이 정상적으로 
 
     const result1 = await authenticationService.validateToken(firstToken);
     const result2 = await authenticationService.validateToken(lastToken);
-    expect(result1.status).toBe("available");
-    expect(result2.status).toBe("pending");
+    expect(result1.status).toBe('available');
+    expect(result2.status).toBe('pending');
   });
 });

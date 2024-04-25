@@ -1,0 +1,68 @@
+name: CI # Name of the GitHub Actions workflow
+
+on: [push] # push 이벤트 발생 시 트리거
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest # 최신 Ubuntu 가상 환경에서 실행
+
+    services:
+      redis:
+        image: redis
+        ports:
+          - 6379:6379 # Redis의 6379 포트를 가상 머신의 6379 포트에 매핑
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_DB: testdb
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        # 데이터베이스의 상태를 확인하는 명령어 및 상태 확인 옵션
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: 'postgresql://postgres:postgres@localhost:5432/testdb'
+
+    steps:
+      - uses: actions/checkout@v2 # 워크플로가 실행되는 현재 레포지토리 코드를 가져옴
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2 # Node.js 환경 설정
+        with:
+          node-version: '16'
+
+      - name: Cache node modules # 노드 모듈을 캐시하여 종속성 설치를 위한 시간을 줄이기 위한 작업.
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }} # 파일이 변경될 때 해시를 무효화 할 수 있도록 함.
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Prisma Migrations
+        run: npx prisma migrate deploy
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run prettier check
+        run: npm run format
+
+      - name: Run tests with coverage
+        run: npm run test:cov
+
+    #   - name: Upload coverage to Codecov
+    #     uses: codecov/codecov-action@v2

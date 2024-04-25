@@ -1,8 +1,8 @@
-import { Controller, Post } from "@nestjs/common";
-import { TypedParam } from "@nestia/core";
-import { CreatePaymentUsecase } from "../usecase/create-payment.usecase";
+import { Controller, Post } from '@nestjs/common';
+import { TypedParam } from '@nestia/core';
+import { CreatePaymentUsecase } from '../usecase/create-payment.usecase';
 
-@Controller("payment")
+@Controller('payment')
 export class PaymentController {
   constructor(private readonly createPaymentUsecase: CreatePaymentUsecase) {}
   /**
@@ -16,8 +16,8 @@ export class PaymentController {
    * @throws 410 예약이 만료된 경우
    * @throws 402 잔액 부족
    * */
-  @Post(":reservationId")
-  async createPayment(@TypedParam("reservationId") reservationId: number) {
+  @Post(':reservationId')
+  async createPayment(@TypedParam('reservationId') reservationId: number) {
     // TODO: Implement this method
     return this.createPaymentUsecase.execute(reservationId);
   }

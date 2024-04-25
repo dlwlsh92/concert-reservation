@@ -1,12 +1,12 @@
-import { addHoursToCurrentTime } from "./utils";
+import { addHoursToCurrentTime } from './utils';
 import {
   ConcertEventDetails,
   SeatDetails,
-} from "../domain/reservations/entities/concert-event-details";
+} from '../domain/reservations/entities/concert-event-details';
 import {
   Reservation,
   ReservationStatus,
-} from "../domain/reservations/entities/reservation";
+} from '../domain/reservations/entities/reservation';
 
 export const reservationMockData = (
   reservation: Partial<Reservation>
@@ -19,7 +19,7 @@ export const reservationMockData = (
     price: 10000,
     expirationDate: addHoursToCurrentTime(1),
     concertStartDate: addHoursToCurrentTime(1),
-    status: "pending",
+    status: 'pending',
     ...reservation,
   };
   return new Reservation(

@@ -1,5 +1,5 @@
-import type { PrismaService } from "./prisma.service";
+import type { PrismaService } from './prisma.service';
 
-type PrismaTxType = Parameters<Parameters<PrismaService["$transaction"]>[0]>[0];
+type PrismaTxType = Parameters<Parameters<PrismaService['$transaction']>[0]>[0];
 
 export { PrismaTxType };

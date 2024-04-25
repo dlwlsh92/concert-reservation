@@ -1,5 +1,5 @@
-import { Injectable } from "@nestjs/common";
-import { ReservationService } from "../../../domain/reservations/application/reservation.service";
+import { Injectable } from '@nestjs/common';
+import { ReservationService } from '../../../domain/reservations/application/reservation.service';
 
 @Injectable()
 export class ReserveSeatUsecase {
@@ -9,7 +9,7 @@ export class ReserveSeatUsecase {
     const reservation = await this.reservationService.reserveSeat(
       seatId,
       concertEventId,
-      userId
+      userId,
     );
     return reservation;
   }

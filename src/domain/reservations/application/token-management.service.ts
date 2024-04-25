@@ -1,14 +1,14 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { Inject, Injectable } from '@nestjs/common';
 import {
   ITokenParameterStorage,
   ITokenParameterStorageToken,
-} from "../repositories/token-parameter-storage.interface";
-import { getAccessStartDate } from "../entities/token";
+} from '../repositories/token-parameter-storage.interface';
+import { getAccessStartDate } from '../entities/token';
 
 @Injectable()
 export class TokenManagementService {
-  numberPerCycle: number = 1000;
-  validTokenSeconds: number = 300;
+  numberPerCycle = 1000;
+  validTokenSeconds = 300;
   constructor(
     @Inject(ITokenParameterStorageToken)
     private readonly tokenParameterStorage: ITokenParameterStorage

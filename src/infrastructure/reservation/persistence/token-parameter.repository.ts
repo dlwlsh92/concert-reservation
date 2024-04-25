@@ -1,7 +1,7 @@
-import { Injectable } from "@nestjs/common";
-import { ITokenParameterStorage } from "../../../domain/reservations/repositories/token-parameter-storage.interface";
-import { Token } from "../../../domain/reservations/entities/token";
-import { RedisService } from "../../../database/redis/redis.service";
+import { Injectable } from '@nestjs/common';
+import { ITokenParameterStorage } from '../../../domain/reservations/repositories/token-parameter-storage.interface';
+import { Token } from '../../../domain/reservations/entities/token';
+import { RedisService } from '../../../database/redis/redis.service';
 
 @Injectable()
 export class TokenParameterRepository implements ITokenParameterStorage {
@@ -30,7 +30,7 @@ export class TokenParameterRepository implements ITokenParameterStorage {
 
   async getWaitingCount() {
     // redis에 저장된 waitingCount를 조회하여 반환한다.
-    const waitingCount = await this.redisService.get("waitingCount");
+    const waitingCount = await this.redisService.get('waitingCount');
     if (!waitingCount) return 0;
     return parseInt(waitingCount) || 0;
   }
@@ -40,9 +40,9 @@ export class TokenParameterRepository implements ITokenParameterStorage {
     // 만일 redis에 waitingCount가 없다면 1로 초기화 한다.
     // addWaitingCount가 호출될때마다 ttl을 지금으로부터 5분으로 설정한다.
     const redis = await this.redisService.getClient();
-    await redis.incr("waitingCount");
-    await redis.expire("waitingCount", 300);
-    const newCount = await this.redisService.get("waitingCount");
+    await redis.incr('waitingCount');
+    await redis.expire('waitingCount', 300);
+    const newCount = await this.redisService.get('waitingCount');
     return newCount ? parseInt(newCount) : 1;
   }
 }
