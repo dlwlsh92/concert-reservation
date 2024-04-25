@@ -1,0 +1,67 @@
+name: CI # Name of the GitHub Actions workflow
+
+on: [push, pull_request] # Triggers the workflow on push or pull request events
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest # Specifies the runner environment
+
+    services:
+      redis:
+        image: redis # Uses the latest Redis image
+        ports:
+          - 6379:6379 # Maps Redis port 6379 to the same port on the runner
+      postgres:
+        image: postgres # Uses the latest PostgreSQL image
+        env:
+          POSTGRES_DB: testdb # Sets the PostgreSQL database name
+          POSTGRES_USER: postgres # Sets the PostgreSQL user
+          POSTGRES_PASSWORD: postgres # Sets the PostgreSQL password
+        ports:
+          - 5432:5432 # Maps PostgreSQL port 5432 to the same port on the runner
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v2 # Checks out the repository content
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2 # Sets up Node.js environment
+        with:
+          node-version: '16' # Specifies Node.js version
+
+      - name: Cache node modules
+        uses: actions/cache@v2 # Caches dependencies
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm # Path to cache
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }} # Cache key
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        run: npm install # Installs project dependencies
+
+      - name: Run lint
+        run: npm run lint # Runs linting
+
+      - name: Run prettier check
+        run: npm run format # Runs Prettier to check code formatting
+
+      - name: Run tests with coverage
+        run: npm run test:cov # Runs tests with coverage
+
+
+    #   - name: Upload coverage to Codecov
+    #     uses: codecov/codecov-action@v2 # Uploads coverage report to Codecov
+    #     with:
+    #       token: ${{ secrets.CODECOV_TOKEN }} # Codecov token for authentication
+    #       file: ./coverage/lcov.info # Specifies the coverage file path
+    #       flags: unittests # Flags for the coverage upload
+    #       name: codecov-umbrella # Name for the coverage report

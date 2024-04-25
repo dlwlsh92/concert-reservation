@@ -1,17 +1,17 @@
-const dotenv = require("dotenv");
+const dotenv = require('dotenv');
 
 // 환경 변수 설정을 불러옵니다.
-dotenv.config({ path: "./env/.env.dev" });
+dotenv.config({ path: './env/.env.development' });
 
 module.exports = {
-  moduleFileExtensions: ["js", "json", "ts"],
-  rootDir: "src",
-  testRegex: ".*\\.spec\\.ts$",
+  moduleFileExtensions: ['js', 'json', 'ts'],
+  rootDir: 'src',
+  testRegex: '.*\\.spec\\.ts$',
   transform: {
-    "^.+\\.ts$": "ts-jest",
+    '^.+\\.ts$': 'ts-jest',
   },
-  collectCoverageFrom: ["**/*.(t|j)s"],
-  coverageDirectory: "../coverage",
+  collectCoverageFrom: ['**/*.(t|j)s'],
+  coverageDirectory: '../coverage',
   verbose: true,
-  testEnvironment: "node",
+  testEnvironment: 'node',
 };
