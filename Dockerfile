@@ -1,18 +1,48 @@
-FROM node:18.16-alpine3.16 as builder
+#
+# development environment phase
+#
+
+FROM node:18.16-alpine3.16 as dev
 
 WORKDIR /opt/app
+
+ENV NODE_ENV=dev
 
 COPY package*.json ./
 COPY prisma ./prisma
 
 RUN npm install
 
+USER node
+
+
+#
+# production build phase
+#
+
+FROM node:18.16-alpine3.16 as builder
+
+WORKDIR /opt/app
+
+ENV NODE_ENV prod
+
+COPY package*.json ./
+COPY prisma ./prisma
+
+RUN npm ci
+
 COPY . .
 
 RUN npm run build
 
-# 실행을 위한 코드
-FROM node:18.16-alpine3.16
+
+#
+# release deploy phase
+#
+
+FROM node:18.16-alpine3.16 as release
+
+ENV NODE_ENV release
 
 COPY --from=builder /opt/app/node_modules ./node_modules
 COPY --from=builder /opt/app/package*.json ./
@@ -20,5 +50,24 @@ COPY --from=builder /opt/app/dist ./dist
 
 EXPOSE 3000
 
-# 운영 환경에 따른 변수(prod, release, ..)는 ECS로 배포할 때 환경 변수로 설정
+USER node
+
+CMD ["node", "dist/src/main.js"]
+
+#
+# production deploy phase
+#
+
+FROM node:18.16-alpine3.16 as prod
+
+ENV NODE_ENV prod
+
+COPY --from=builder /opt/app/node_modules ./node_modules
+COPY --from=builder /opt/app/package*.json ./
+COPY --from=builder /opt/app/dist ./dist
+
+EXPOSE 3000
+
+USER node
+
 CMD ["node", "dist/src/main.js"]

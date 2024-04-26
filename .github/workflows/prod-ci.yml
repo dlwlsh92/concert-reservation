@@ -92,5 +92,5 @@ jobs:
 
       - name: Build, tag, and push prod-image to Amazon ECR
         run: |
-          docker build -t ${{ env.ECR_REGISTRY }}:${{ env.ECR_REPOSITORY }}-prod .
+          docker build -t ${{ env.ECR_REGISTRY }}:${{ env.ECR_REPOSITORY }}-prod . --target=prod
           docker push ${{ env.ECR_REGISTRY }}:${{ env.ECR_REPOSITORY }}-prod
