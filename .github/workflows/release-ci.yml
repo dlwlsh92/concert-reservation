@@ -93,7 +93,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build, tag, and push dev-image to Amazon ECR
+      - name: Build, tag, and push release-image to Amazon ECR
         run: |
-          docker build -t ${{ env.ECR_REGISTRY }}:${{ env.ECR_REPOSITORY }}-dev .
-          docker push ${{ env.ECR_REGISTRY }}:${{ env.ECR_REPOSITORY }}-dev
+          docker build -t ${{ env.ECR_REGISTRY }}:${{ env.ECR_REPOSITORY }}-release . --target=release
+          docker push ${{ env.ECR_REGISTRY }}:${{ env.ECR_REPOSITORY }}-release
