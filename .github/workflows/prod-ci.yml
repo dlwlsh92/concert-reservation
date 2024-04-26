@@ -94,3 +94,20 @@ jobs:
         run: |
           docker build -t ${{ env.ECR_REGISTRY }}:${{ env.ECR_REPOSITORY }}-prod . --target=prod
           docker push ${{ env.ECR_REGISTRY }}:${{ env.ECR_REPOSITORY }}-prod
+
+      #
+      #   RDS와 Redis에 대한 구비를 아직 못했습니다...
+      #
+    #   - name: Render ECS task definition
+    #     uses: aws-actions/amazon-ecs-render-task-definition@v1
+    #     with:
+    #       task-definition: .taskdefinition/prod-task-definition.json
+    #       container-name: service-prod
+    #       image: ${{ env.ECR_REGISTRY }}:${{ env.ECR_REPOSITORY }}-prod
+
+    #   - name: Deploy Amazon ECS task definition
+    #     uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+    #     with:
+    #       task-definition: .taskdefinition/prod-task-definition.json
+    #       service: hhplus-prod
+    #       cluster: cluster-hhplus-prod
