@@ -59,6 +59,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Build application
+        run: npm run build
+
       - name: Run Prisma Migrations
         run: npx prisma migrate deploy
 
@@ -70,6 +73,9 @@ jobs:
 
       - name: Run tests with coverage
         run: npm run test:cov
+
+  #   - name: Upload coverage to Codecov
+  #     uses: codecov/codecov-action@v2
 
   release-cd:
     runs-on: ubuntu-latest
