@@ -1,5 +1,6 @@
 ## 동시성 제어 분석
 아래 문서에 정리 중입니다. 다시 정리해서 readme에 올려두도록 하겠습니다..!
+
 https://www.notion.so/7-2da6faf04ae2493c8efbdbef7aec6ebe?pvs=4
 
 ## 과제 요약
