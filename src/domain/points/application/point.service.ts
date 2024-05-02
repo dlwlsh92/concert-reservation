@@ -1,4 +1,9 @@
-import { HttpException, Inject, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import {
   IPointReaderToken,
   PointReaderInterface,
@@ -17,7 +22,7 @@ export class PointService {
     private readonly pointReaderRepository: PointReaderInterface,
     @Inject(IPointWriteToken)
     private readonly pointWriteRepository: PointWriteInterface,
-    private readonly prisma: PrismaService
+    private readonly prisma: PrismaService,
   ) {}
 
   async getPoints(userId: number): Promise<Point> {
@@ -30,39 +35,58 @@ export class PointService {
 
   async addPoints(userId: number, amount: number): Promise<Point> {
     return this.prisma.$transaction(async (tx) => {
-      const point = await this.pointReaderRepository.getPoint(userId, tx);
-      if (!point) {
-        throw new HttpException('포인트 정보를 찾을 수 없습니다.', 404);
+      const maxAttempts = 3;
+      let attempts = 0;
+      while (attempts < maxAttempts) {
+        const point = await this.pointReaderRepository.getPoint(userId, tx);
+        if (!point) {
+          throw new HttpException('포인트 정보를 찾을 수 없습니다.', 404);
+        }
+        const updatedPoint = point.add(amount).point;
+        try {
+          return await this.pointWriteRepository.addPoint(
+            userId,
+            updatedPoint,
+            point.version ?? 1,
+            tx,
+          );
+        } catch (e) {
+          attempts++;
+        }
       }
-      const updatedPoint = point.add(amount).point;
-      return this.pointWriteRepository.addPoint(
-        userId,
-        updatedPoint,
-        point.version ?? 1,
-        tx
-      );
+      throw new InternalServerErrorException('포인트 충전에 실패했습니다.');
     });
   }
 
   async subtractPoints(userId: number, amount: number): Promise<Point> {
     return this.prisma.$transaction(async (tx) => {
-      const point = await this.pointReaderRepository.getPoint(userId, tx);
-      if (!point) {
-        throw new HttpException('포인트 정보를 찾을 수 없습니다.', 404);
+      const maxAttempts = 3;
+      let attempts = 0;
+      while (attempts < maxAttempts) {
+        const point = await this.pointReaderRepository.getPoint(userId, tx);
+        if (!point) {
+          throw new HttpException('포인트 정보를 찾을 수 없습니다.', 404);
+        }
+        const result = point.subtract(amount);
+        if (
+          result.status === false &&
+          result.statusMessage === 'NotEnoughPoint'
+        ) {
+          throw new HttpException('잔액이 부족합니다.', 402);
+        }
+        try {
+          const updatedPoint = await this.pointWriteRepository.subtractPoint(
+            userId,
+            result.point,
+            point.version ?? 1,
+            tx,
+          );
+          return updatedPoint;
+        } catch (e) {
+          attempts++;
+        }
       }
-      const result = point.subtract(amount);
-      if (
-        result.status === false &&
-        result.statusMessage === 'NotEnoughPoint'
-      ) {
-        throw new HttpException('잔액이 부족합니다.', 402);
-      }
-      return this.pointWriteRepository.subtractPoint(
-        userId,
-        result.point,
-        point.version ?? 1,
-        tx
-      );
+      throw new InternalServerErrorException('포인트 충전에 실패했습니다.');
     });
   }
 }

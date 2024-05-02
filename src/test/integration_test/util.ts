@@ -29,7 +29,7 @@ export class TestUtil {
       data: {
         name: 'test',
         point: point,
-        version: 0,
+        version: 1,
       },
     });
   }
@@ -69,6 +69,7 @@ export class TestUtil {
         expirationDate: addHoursToCurrentTime(-1),
         isPaid: false,
         price: 10000,
+        version: 1,
       })),
     });
   }
@@ -81,6 +82,7 @@ export class TestUtil {
         expirationDate: addHoursToCurrentTime(-1),
         isPaid: false,
         price: 10000,
+        version: 1,
       },
     });
   }

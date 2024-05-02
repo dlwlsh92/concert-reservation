@@ -5,6 +5,7 @@ export interface SeatDetails {
   expirationDate: Date;
   isPaid: boolean;
   price: number;
+  version: number;
 }
 
 export class ConcertEventDetails {
@@ -15,7 +16,7 @@ export class ConcertEventDetails {
     public readonly startDate: Date,
     public readonly reservationDate: Date,
     public maxSeatCapacity: number,
-    public seats: SeatDetails[]
+    public seats: SeatDetails[],
   ) {
     this.currentTime = new Date();
   }

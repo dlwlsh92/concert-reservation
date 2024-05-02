@@ -19,10 +19,10 @@ describe('예약 관련 로직에 대한 단위 테스트', () => {
     concertDetailsReaderRepository = {
       getUpcomingConcertEventDetails: jest.fn(),
       getConcertEventDetails: jest.fn(),
-      findSeatBySeatIdWithLock: jest.fn(),
+      findSeatBySeatId: jest.fn(),
     };
     reservationWriteRepository = {
-      reserveSeat: jest.fn(),
+      reserveSeatWithVersion: jest.fn(),
       createReservation: jest.fn(),
       updateSeatPaidStatus: jest.fn(),
     };
@@ -30,7 +30,7 @@ describe('예약 관련 로직에 대한 단위 테스트', () => {
     reservationService = new ReservationService(
       concertDetailsReaderRepository,
       reservationWriteRepository,
-      prisma
+      prisma,
     );
   });
 
@@ -56,8 +56,8 @@ describe('예약 관련 로직에 대한 단위 테스트', () => {
             ],
           },
         ].map((concertEventDetail) =>
-          concertEventDetailsMockData(concertEventDetail)
-        )
+          concertEventDetailsMockData(concertEventDetail),
+        ),
       );
       const availableConcertDetails =
         await reservationService.getAvailableConcertDates(3);
@@ -66,7 +66,7 @@ describe('예약 관련 로직에 대한 단위 테스트', () => {
 
     it('예약 가능한 공연 날짜가 없을 경우 빈 배열을 반환한다.', async () => {
       concertDetailsReaderRepository.getUpcomingConcertEventDetails.mockResolvedValue(
-        []
+        [],
       );
       const availableConcertDetails =
         await reservationService.getAvailableConcertDates(3);
@@ -76,9 +76,7 @@ describe('예약 관련 로직에 대한 단위 테스트', () => {
 
   describe('좌석 예약에 대한 테스트 코드 작성', () => {
     it('좌석 조회에 실패한 경우 404 에러를 발생시킨다.', async () => {
-      concertDetailsReaderRepository.findSeatBySeatIdWithLock.mockResolvedValue(
-        null
-      );
+      concertDetailsReaderRepository.findSeatBySeatId.mockResolvedValue(null);
       try {
         await reservationService.reserveSeat(1, 100, 10);
       } catch (e) {
@@ -91,11 +89,11 @@ describe('예약 관련 로직에 대한 단위 테스트', () => {
       /**
        * 좌석 예약 시 expirationDate를 5분 후로 지정하기 때문에 만일 현재 시점보다 만료 시각이 미래일 경우 누군가에 의해 점유된 것이다.
        * */
-      concertDetailsReaderRepository.findSeatBySeatIdWithLock.mockResolvedValue(
+      concertDetailsReaderRepository.findSeatBySeatId.mockResolvedValue(
         seatDetailsMockData({
           expirationDate: addHoursToCurrentTime(1),
           isPaid: false,
-        })
+        }),
       );
       try {
         await reservationService.reserveSeat(1, 100, 10);
@@ -106,11 +104,11 @@ describe('예약 관련 로직에 대한 단위 테스트', () => {
     });
 
     it('이미 결제된 좌석일 경우 409 에러를 발생시킨다.', async () => {
-      concertDetailsReaderRepository.findSeatBySeatIdWithLock.mockResolvedValue(
+      concertDetailsReaderRepository.findSeatBySeatId.mockResolvedValue(
         seatDetailsMockData({
           expirationDate: addHoursToCurrentTime(-1),
           isPaid: true,
-        })
+        }),
       );
       try {
         await reservationService.reserveSeat(1, 100, 10);
@@ -121,13 +119,15 @@ describe('예약 관련 로직에 대한 단위 테스트', () => {
     });
 
     it('좌석 업데이트에 실패했을 경우 500 에러를 발생시킨다.', async () => {
-      concertDetailsReaderRepository.findSeatBySeatIdWithLock.mockResolvedValue(
+      concertDetailsReaderRepository.findSeatBySeatId.mockResolvedValue(
         seatDetailsMockData({
           expirationDate: addHoursToCurrentTime(-1),
           isPaid: false,
-        })
+        }),
       );
-      reservationWriteRepository.reserveSeat.mockResolvedValue(null);
+      reservationWriteRepository.reserveSeatWithVersion.mockRejectedValue(
+        new Error('테이블 업데이트 실패'),
+      );
       try {
         await reservationService.reserveSeat(1, 100, 10);
       } catch (e) {
@@ -137,17 +137,17 @@ describe('예약 관련 로직에 대한 단위 테스트', () => {
     });
 
     it('좌석 예약에 성공했을 경우 예약 정보를 반환한다.', async () => {
-      concertDetailsReaderRepository.findSeatBySeatIdWithLock.mockResolvedValue(
+      concertDetailsReaderRepository.findSeatBySeatId.mockResolvedValue(
         seatDetailsMockData({
           expirationDate: addHoursToCurrentTime(-1),
           isPaid: false,
-        })
+        }),
       );
-      reservationWriteRepository.reserveSeat.mockResolvedValue(
+      reservationWriteRepository.reserveSeatWithVersion.mockResolvedValue(
         seatDetailsMockData({
           expirationDate: addHoursToCurrentTime(1),
           isPaid: false,
-        })
+        }),
       );
       reservationWriteRepository.createReservation.mockResolvedValue(
         new Reservation(
@@ -157,8 +157,8 @@ describe('예약 관련 로직에 대한 단위 테스트', () => {
           1,
           10000,
           addHoursToCurrentTime(1),
-          'pending'
-        )
+          'pending',
+        ),
       );
       const reservation = await reservationService.reserveSeat(1, 100, 10);
       expect(reservation.userId).toBe(10);

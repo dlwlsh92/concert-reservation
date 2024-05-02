@@ -12,7 +12,7 @@ export class ConcertDetailsReaderRepository implements IConcertDetailsReader {
   constructor(private readonly prisma: PrismaService) {}
 
   async getUpcomingConcertEventDetails(
-    concertId: number
+    concertId: number,
   ): Promise<ConcertEventDetails[]> {
     const upcomingEvents = await this.prisma.concertEvent.findMany({
       where: {
@@ -41,14 +41,15 @@ export class ConcertDetailsReaderRepository implements IConcertDetailsReader {
               expirationDate: seat.expirationDate,
               isPaid: seat.isPaid,
               price: seat.price,
+              version: seat.version,
             };
-          })
-        )
+          }),
+        ),
     );
   }
 
   async getConcertEventDetails(
-    concertEventId: number
+    concertEventId: number,
   ): Promise<ConcertEventDetails | null> {
     const event = await this.prisma.concertEvent.findUnique({
       where: {
@@ -75,20 +76,20 @@ export class ConcertDetailsReaderRepository implements IConcertDetailsReader {
           expirationDate: seat.expirationDate,
           isPaid: seat.isPaid,
           price: seat.price,
+          version: seat.version,
         };
-      })
+      }),
     );
   }
 
-  async findSeatBySeatIdWithLock(
+  async findSeatBySeatId(
     seatId: number,
-    tx?: PrismaTxType
+    tx?: PrismaTxType,
   ): Promise<SeatDetails | null> {
-    const result: SeatDetails[] = await (tx ?? this.prisma)
-      .$queryRaw`SELECT * FROM "Seat" WHERE id = ${seatId} FOR UPDATE`;
-    if (result.length === 0) {
-      return null;
-    }
-    return result[0];
+    return await (tx ?? this.prisma).seat.findUnique({
+      where: {
+        id: seatId,
+      },
+    });
   }
 }

@@ -18,7 +18,7 @@ model User {
   id      Int     @id @default(autoincrement())
   name    String
   point   Int     @default(0)
-  version Int     @default(0)
+  version Int     @default(1)
   reservations Reservation[]
   orders       Order[]
 }
@@ -47,6 +47,7 @@ model Seat {
   expirationDate     DateTime
   isPaid         Boolean   @default(false)
   price           Int
+  version         Int      @default(1)
   concertEvent    ConcertEvent @relation(fields: [concertEventId], references: [id])
   reservations    Reservation[]
 }

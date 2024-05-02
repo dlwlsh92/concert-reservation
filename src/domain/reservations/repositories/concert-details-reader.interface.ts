@@ -8,13 +8,13 @@ export const IConcertDetailsReaderToken = Symbol('IConcertDetailsReader');
 
 export interface IConcertDetailsReader {
   getUpcomingConcertEventDetails(
-    concertId: number
+    concertId: number,
   ): Promise<ConcertEventDetails[]>;
   getConcertEventDetails(
-    concertEventId: number
+    concertEventId: number,
   ): Promise<ConcertEventDetails | null>;
-  findSeatBySeatIdWithLock(
+  findSeatBySeatId(
     seatId: number,
-    tx?: PrismaTxType
+    tx?: PrismaTxType,
   ): Promise<SeatDetails | null>;
 }

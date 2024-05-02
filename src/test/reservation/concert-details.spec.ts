@@ -41,6 +41,7 @@ describe('콘서트 관련 정보 조회 테스트 로직', () => {
           expirationDate: addHoursToCurrentTime(1),
           isPaid: false,
           price: 10000,
+          version: 1,
         },
         {
           id: 2,
@@ -49,6 +50,7 @@ describe('콘서트 관련 정보 조회 테스트 로직', () => {
           expirationDate: addHoursToCurrentTime(-1),
           isPaid: false,
           price: 10000,
+          version: 1,
         },
         {
           id: 3,
@@ -57,6 +59,7 @@ describe('콘서트 관련 정보 조회 테스트 로직', () => {
           expirationDate: addHoursToCurrentTime(-1),
           isPaid: true,
           price: 10000,
+          version: 1,
         },
       ],
     );
@@ -79,6 +82,7 @@ describe('콘서트 관련 정보 조회 테스트 로직', () => {
           expirationDate: addHoursToCurrentTime(1),
           isPaid: false,
           price: 10000,
+          version: 1,
         },
       ],
     );
@@ -101,6 +105,7 @@ describe('콘서트 관련 정보 조회 테스트 로직', () => {
           expirationDate: addHoursToCurrentTime(-1),
           isPaid: true,
           price: 10000,
+          version: 1,
         },
       ],
     );
