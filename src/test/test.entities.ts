@@ -9,7 +9,7 @@ import {
 } from '../domain/reservations/entities/reservation';
 
 export const reservationMockData = (
-  reservation: Partial<Reservation>
+  reservation: Partial<Reservation>,
 ): Reservation => {
   const doc = {
     id: 1,
@@ -29,12 +29,12 @@ export const reservationMockData = (
     doc.seatNumber,
     doc.price,
     doc.expirationDate,
-    doc.status as ReservationStatus
+    doc.status as ReservationStatus,
   );
 };
 
 export const concertEventDetailsMockData = (
-  concertEventDetails: Partial<ConcertEventDetails>
+  concertEventDetails: Partial<ConcertEventDetails>,
 ): ConcertEventDetails => {
   const doc = {
     id: 1,
@@ -51,12 +51,12 @@ export const concertEventDetailsMockData = (
     doc.startDate,
     doc.reservationDate,
     doc.maxSeatCapacity,
-    doc.seats
+    doc.seats,
   );
 };
 
 export const seatDetailsMockData = (
-  seatDetails: Partial<SeatDetails>
+  seatDetails: Partial<SeatDetails>,
 ): SeatDetails => {
   const doc = {
     id: 1,
@@ -65,6 +65,7 @@ export const seatDetailsMockData = (
     expirationDate: addHoursToCurrentTime(1),
     isPaid: false,
     price: 10000,
+    version: 1,
     ...seatDetails,
   };
   return {
@@ -74,5 +75,6 @@ export const seatDetailsMockData = (
     expirationDate: doc.expirationDate,
     isPaid: doc.isPaid,
     price: doc.price,
+    version: doc.version,
   };
 };

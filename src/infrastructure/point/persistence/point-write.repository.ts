@@ -12,7 +12,7 @@ export class PointWriteRepository implements PointWriteInterface {
     userId: number,
     point: number,
     version: number,
-    tx?: PrismaTxType
+    tx?: PrismaTxType,
   ) {
     return (tx ?? this.prisma).user
       .update({
@@ -34,7 +34,7 @@ export class PointWriteRepository implements PointWriteInterface {
     userId: number,
     point: number,
     version: number,
-    tx?: PrismaTxType
+    tx?: PrismaTxType,
   ) {
     return (tx ?? this.prisma).user
       .update({

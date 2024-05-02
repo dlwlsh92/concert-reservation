@@ -8,33 +8,36 @@ import { Reservation } from '../../../domain/reservations/entities/reservation';
 @Injectable()
 export class ReservationWriteRepository implements IReservationWrite {
   constructor(private prisma: PrismaService) {}
-  async reserveSeat(
+  async reserveSeatWithVersion(
     seatId: number,
     reservationExpirationDate: Date,
-    tx?: PrismaTxType
-  ): Promise<SeatDetails | null> {
-    const updatedSeat = await (tx ?? this.prisma).seat.update({
-      where: { id: seatId },
-      data: {
-        expirationDate: reservationExpirationDate,
-      },
-    });
-    if (updatedSeat) {
-      return {
-        id: updatedSeat.id,
-        concertEventId: updatedSeat.concertEventId,
-        seatNumber: updatedSeat.seatNumber,
-        expirationDate: updatedSeat.expirationDate,
-        isPaid: updatedSeat.isPaid,
-        price: updatedSeat.price,
-      };
-    }
-    return null;
+    version: number,
+    tx?: PrismaTxType,
+  ): Promise<SeatDetails> {
+    return (tx ?? this.prisma).seat
+      .update({
+        where: { id: seatId, version: version },
+        data: {
+          expirationDate: reservationExpirationDate,
+          version: { increment: 1 },
+        },
+      })
+      .then((updatedSeat) => {
+        return {
+          id: updatedSeat.id,
+          concertEventId: updatedSeat.concertEventId,
+          seatNumber: updatedSeat.seatNumber,
+          expirationDate: updatedSeat.expirationDate,
+          isPaid: updatedSeat.isPaid,
+          price: updatedSeat.price,
+          version: updatedSeat.version,
+        };
+      });
   }
 
   async createReservation(
     reservation: Reservation,
-    tx?: PrismaTxType
+    tx?: PrismaTxType,
   ): Promise<Reservation> {
     return (tx ?? this.prisma).reservation
       .create({
@@ -56,15 +59,15 @@ export class ReservationWriteRepository implements IReservationWrite {
             createdReservation.seatId,
             createdReservation.price,
             createdReservation.expirationDate,
-            createdReservation.status
-          )
+            createdReservation.status,
+          ),
       );
   }
 
   async updateSeatPaidStatus(
     seatId: number,
     isPaid: boolean,
-    tx?: PrismaTxType
+    tx?: PrismaTxType,
   ): Promise<SeatDetails> {
     return (tx ?? this.prisma).seat
       .update({
@@ -81,6 +84,7 @@ export class ReservationWriteRepository implements IReservationWrite {
           expirationDate: updatedSeat.expirationDate,
           isPaid: updatedSeat.isPaid,
           price: updatedSeat.price,
+          version: updatedSeat.version,
         };
       });
   }

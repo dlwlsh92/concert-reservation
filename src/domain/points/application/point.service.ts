@@ -63,7 +63,6 @@ export class PointService {
       const maxAttempts = 3;
       let attempts = 0;
       while (attempts < maxAttempts) {
-        console.log('=>(point.service.ts:67) attempts', attempts);
         const point = await this.pointReaderRepository.getPoint(userId, tx);
         if (!point) {
           throw new HttpException('포인트 정보를 찾을 수 없습니다.', 404);

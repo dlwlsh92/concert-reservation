@@ -5,18 +5,19 @@ import { Reservation } from '../entities/reservation';
 export const IReservationWriteToken = Symbol('IReservationWrite');
 
 export interface IReservationWrite {
-  reserveSeat(
+  reserveSeatWithVersion(
     seatId: number,
     reservationExpirationDate: Date,
-    tx?: PrismaTxType
-  ): Promise<SeatDetails | null>;
+    version: number,
+    tx?: PrismaTxType,
+  ): Promise<SeatDetails>;
   createReservation(
     reservation: Reservation,
-    tx?: PrismaTxType
+    tx?: PrismaTxType,
   ): Promise<Reservation>;
   updateSeatPaidStatus(
     seatId: number,
     isPaid: boolean,
-    tx?: PrismaTxType
+    tx?: PrismaTxType,
   ): Promise<SeatDetails>;
 }
