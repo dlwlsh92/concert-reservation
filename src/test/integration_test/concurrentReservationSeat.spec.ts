@@ -49,12 +49,12 @@ describe('좌석 예약 관련 테스트', () => {
       return reservationService.reserveSeat(
         seats[0].id,
         concertEvent.id,
-        user.id
+        user.id,
       );
     });
     const reservationSeats = await Promise.allSettled(reservationSeatPromise);
     const successReservations = reservationSeats.filter(
-      (result) => result.status === 'fulfilled'
+      (result) => result.status === 'fulfilled',
     );
     expect(successReservations.length).toBe(1);
   });
