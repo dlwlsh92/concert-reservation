@@ -17,7 +17,7 @@ console.log('=>(app.module.ts:26) process.env.NODE_ENV', process.env.NODE_ENV);
     PaymentModule,
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: 'env/.env.local',
+      envFilePath: '.env.local',
     }),
   ],
   controllers: [AppController],
