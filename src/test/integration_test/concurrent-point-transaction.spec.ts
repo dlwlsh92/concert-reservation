@@ -31,7 +31,7 @@ describe('포인트 사용/차감에 대한 결과 계산이 정확하다.', () 
     testUtil = module.get<TestUtil>(TestUtil);
   });
 
-  it('포인트 충전, 차감이 정상적으로 작동한다.', async () => {
+  it('동시에 요청된 여러 건의 포인트 충전, 차감이 정상적으로 작동한다.', async () => {
     const user = await testUtil.createUser();
 
     // allSettled를 사용하여 Promise.allSettled의 결과를 확인합니다.
@@ -39,6 +39,9 @@ describe('포인트 사용/차감에 대한 결과 계산이 정확하다.', () 
       pointService.addPoints(user.id, 10000),
       pointService.subtractPoints(user.id, 5000),
       pointService.subtractPoints(user.id, 1000),
+      pointService.addPoints(user.id, 3000),
+      pointService.subtractPoints(user.id, 3000),
+      pointService.addPoints(user.id, 5000),
       pointService.subtractPoints(user.id, 3000),
     ]);
 

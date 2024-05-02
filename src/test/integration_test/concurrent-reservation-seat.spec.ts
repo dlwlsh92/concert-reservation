@@ -35,7 +35,7 @@ describe('좌석 예약 관련 테스트', () => {
     const concert = await testUtil.createConcert();
     const concertEvent = await testUtil.createConcertEvent(concert.id, 3);
 
-    const tenUsers = Array.from({ length: 10 }).map(async (_, index) => {
+    const tenUsers = Array.from({ length: 1000 }).map(async (_, index) => {
       return testUtil.createUser();
     });
     const users = await Promise.all(tenUsers);
@@ -49,12 +49,12 @@ describe('좌석 예약 관련 테스트', () => {
       return reservationService.reserveSeat(
         seats[0].id,
         concertEvent.id,
-        user.id
+        user.id,
       );
     });
     const reservationSeats = await Promise.allSettled(reservationSeatPromise);
     const successReservations = reservationSeats.filter(
-      (result) => result.status === 'fulfilled'
+      (result) => result.status === 'fulfilled',
     );
     expect(successReservations.length).toBe(1);
   });
