@@ -39,6 +39,9 @@ describe('포인트 사용/차감에 대한 결과 계산이 정확하다.', () 
       pointService.addPoints(user.id, 10000),
       pointService.subtractPoints(user.id, 5000),
       pointService.subtractPoints(user.id, 1000),
+      pointService.addPoints(user.id, 3000),
+      pointService.subtractPoints(user.id, 3000),
+      pointService.addPoints(user.id, 5000),
       pointService.subtractPoints(user.id, 3000),
     ]);
 

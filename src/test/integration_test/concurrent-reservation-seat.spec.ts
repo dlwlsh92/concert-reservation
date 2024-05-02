@@ -35,7 +35,7 @@ describe('좌석 예약 관련 테스트', () => {
     const concert = await testUtil.createConcert();
     const concertEvent = await testUtil.createConcertEvent(concert.id, 3);
 
-    const tenUsers = Array.from({ length: 10 }).map(async (_, index) => {
+    const tenUsers = Array.from({ length: 1000 }).map(async (_, index) => {
       return testUtil.createUser();
     });
     const users = await Promise.all(tenUsers);
