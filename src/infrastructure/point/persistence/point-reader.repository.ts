@@ -14,9 +14,6 @@ export class PointReaderRepository implements PointReaderInterface {
         id: userId,
       },
     });
-    if (!user) {
-      return null;
-    }
-    return new Point(user.id, user.point, user.version);
+    return user ? new Point(user.id, user.point, user.version) : null;
   }
 }

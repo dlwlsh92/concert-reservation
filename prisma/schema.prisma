@@ -38,6 +38,8 @@ model ConcertEvent {
   concert         Concert   @relation(fields: [concertId], references: [id])
   seats           Seat[]
   reservations    Reservation[]
+
+  @@index([concertId, startDate])
 }
 
 model Seat {
@@ -50,6 +52,8 @@ model Seat {
   version         Int      @default(1)
   concertEvent    ConcertEvent @relation(fields: [concertEventId], references: [id])
   reservations    Reservation[]
+
+  @@index([concertEventId])
 }
 
 enum ReservationStatus {
@@ -79,4 +83,6 @@ model Order {
   orderDate     DateTime @default(now())
   user          User       @relation(fields: [userId], references: [id])
   reservation   Reservation @relation(fields: [reservationId], references: [id])
+
+  @@index([userId])
 }
