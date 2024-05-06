@@ -74,30 +74,29 @@ jobs:
       - name: Run tests with coverage
         run: npm run test:cov
 
-  prod-cd:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-region: ${{ env.AWS_REGION }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: Login AWS ECR service
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
+  # AWS 비용 절감을 위해 임시로 주석처리 했습니다..!
+  # prod-cd:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #     - name: Configure AWS credentials
+  #       uses: aws-actions/configure-aws-credentials@v1
+  #       with:
+  #         aws-region: ${{ env.AWS_REGION }}
+  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: Build, tag, and push prod-image to Amazon ECR
-        run: |
-          docker build -t ${{ env.ECR_REGISTRY }}:${{ env.ECR_REPOSITORY }}-prod . --target=prod
-          docker push ${{ env.ECR_REGISTRY }}:${{ env.ECR_REPOSITORY }}-prod
+  #     - name: Login AWS ECR service
+  #       id: login-ecr
+  #       uses: aws-actions/amazon-ecr-login@v2
 
-      #
-      #   RDS와 Redis에 대한 구비를 아직 못했습니다...
-      #
+  #     - name: Build, tag, and push prod-image to Amazon ECR
+  #       run: |
+  #         docker build -t ${{ env.ECR_REGISTRY }}:${{ env.ECR_REPOSITORY }}-prod . --target=prod
+  #         docker push ${{ env.ECR_REGISTRY }}:${{ env.ECR_REPOSITORY }}-prod
+
     #   - name: Render ECS task definition
     #     uses: aws-actions/amazon-ecs-render-task-definition@v1
     #     with:
