@@ -11,7 +11,7 @@ export class TokenManagementService {
   validTokenSeconds = 300;
   constructor(
     @Inject(ITokenParameterStorageToken)
-    private readonly tokenParameterStorage: ITokenParameterStorage
+    private readonly tokenParameterStorage: ITokenParameterStorage,
   ) {}
 
   async getAccessStartDate() {
@@ -19,7 +19,7 @@ export class TokenManagementService {
     return getAccessStartDate(
       this.numberPerCycle,
       this.validTokenSeconds,
-      waitingCount
+      waitingCount,
     );
   }
 
@@ -31,9 +31,9 @@ export class TokenManagementService {
     const createdToken = this.tokenParameterStorage.setToken(
       token,
       accessStartDate,
-      expirationDate
+      expirationDate,
     );
-    await this.tokenParameterStorage.addWaitingCount();
+    await this.tokenParameterStorage.addWaitingCount(this.validTokenSeconds);
     return createdToken;
   }
 

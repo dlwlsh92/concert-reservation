@@ -6,8 +6,8 @@ export interface ITokenParameterStorage {
   setToken(
     token: string,
     accessStartDate: Date,
-    expirationDate: Date
+    expirationDate: Date,
   ): Promise<Token>;
   getWaitingCount(): Promise<number>;
-  addWaitingCount(): Promise<number>;
+  addWaitingCount(validTokenSeconds: number): Promise<number>;
 }

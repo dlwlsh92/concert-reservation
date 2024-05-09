@@ -17,13 +17,13 @@ export class TokenParameterRepository implements ITokenParameterStorage {
   async setToken(
     token: string,
     accessStartDate: Date,
-    expirationDate: Date
+    expirationDate: Date,
   ): Promise<Token> {
     const ttlMilliseconds = expirationDate.getTime() - new Date().getTime();
     await this.redisService.set(
       token,
       accessStartDate.getTime().toString(),
-      ttlMilliseconds
+      ttlMilliseconds,
     );
     return new Token(token, accessStartDate);
   }
@@ -35,13 +35,13 @@ export class TokenParameterRepository implements ITokenParameterStorage {
     return parseInt(waitingCount) || 0;
   }
 
-  async addWaitingCount() {
+  async addWaitingCount(validTokenSeconds: number) {
     // redis에 저장된 waitingCount를 1 증가시킨다.
     // 만일 redis에 waitingCount가 없다면 1로 초기화 한다.
     // addWaitingCount가 호출될때마다 ttl을 지금으로부터 5분으로 설정한다.
     const redis = await this.redisService.getClient();
     await redis.incr('waitingCount');
-    await redis.expire('waitingCount', 300);
+    await redis.expire('waitingCount', validTokenSeconds);
     const newCount = await this.redisService.get('waitingCount');
     return newCount ? parseInt(newCount) : 1;
   }

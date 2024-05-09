@@ -33,13 +33,14 @@ describe('예약 서비스를 이용할 수 있는 대기열이 정상적으로 
       ],
     }).compile();
     tokenManagementService = module.get<TokenManagementService>(
-      TokenManagementService
+      TokenManagementService,
     );
     authenticationService = module.get<AuthenticationService>(
-      AuthenticationService
+      AuthenticationService,
     );
-    tokenManagementService.validTokenSeconds = 300;
     tokenManagementService.numberPerCycle = 3;
+    tokenManagementService.validTokenSeconds = 300;
+
     testUtil = module.get<TestUtil>(TestUtil);
     redisService = module.get<RedisService>(RedisService);
   });
@@ -49,7 +50,7 @@ describe('예약 서비스를 이용할 수 있는 대기열이 정상적으로 
     await redis.flushall();
   });
 
-  it('대기열이 정상적으로 작동하는지 확인', async () => {
+  it('대기열 토큰의 status가 사이클 계산에 따라 정확히 반환되는지 확인함.', async () => {
     const tokens: string[] = [];
     // 4개의 토큰을 생성
     for (let i = 0; i < 4; i++) {
@@ -66,5 +67,21 @@ describe('예약 서비스를 이용할 수 있는 대기열이 정상적으로 
     const result2 = await authenticationService.validateToken(lastToken);
     expect(result1.status).toBe('available');
     expect(result2.status).toBe('pending');
+  });
+
+  it('마지막 토큰의 만료 시각까지 대기열 토큰이 생성되지 않으면 대기열 카운트가 초기화되는지 확인', async () => {
+    tokenManagementService.validTokenSeconds = 3;
+
+    for (let i = 0; i < 3; i++) {
+      await authenticationService.createToken();
+    }
+    /**
+     * 테스트를 위해 설정한 토큰 만료 시간인 3초 이후에 토큰을 생성하여 대기열 카운트가 초기화되는지 확인함.
+     * 만일 대기열 카운트가 초기화되지 않았다면 lastToken의 status는 pending이 되어야 합니다.
+     * */
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+    const lastToken = await authenticationService.createToken();
+    const result = await authenticationService.validateToken(lastToken);
+    expect(result.status).toBe('available');
   });
 });
