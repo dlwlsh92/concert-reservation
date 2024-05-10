@@ -1,6 +1,8 @@
 ## 콘서트 예약 시스템에서의 Query 분석 및 DB Index 설계
 https://www.notion.so/query-DB-Index-792b57fb40484c0487a4936c9c205a94?pvs=4
 
+## 대기열 시스템 분석
+https://www.notion.so/c1467e1f9c8b41dc9b15f5a180a0f0c7?pvs=4
 
 ## 동시성 문제와 극복 주차 과제 요약
 - 아래의 동시성 제어 분석에 동시성 관련하여 고민한 것들을 정리하고, 구현 로직에 대한 근거를 서술해두었습니다.
