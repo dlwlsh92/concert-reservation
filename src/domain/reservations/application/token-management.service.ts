@@ -7,7 +7,7 @@ import { getAccessStartDate } from '../entities/token';
 
 @Injectable()
 export class TokenManagementService {
-  numberPerCycle = 1000;
+  numberPerCycle = 7500;
   validTokenSeconds = 300;
   constructor(
     @Inject(ITokenParameterStorageToken)
