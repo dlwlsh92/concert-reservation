@@ -11,7 +11,7 @@ export class OrderWriteRepository implements IOrderWriteRepository {
     userId: number,
     reservationId: number,
     totalPrice: number,
-    orderDate: Date
+    orderDate: Date,
   ): Promise<Order> {
     return this.prisma.order.create({
       data: {

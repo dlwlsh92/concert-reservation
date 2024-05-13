@@ -5,7 +5,7 @@ import { Reservation } from '../../../domain/reservations/entities/reservation';
 
 @Injectable()
 export class ReservationReaderRepository
-implements IReservationReaderRepository
+  implements IReservationReaderRepository
 {
   constructor(private readonly prisma: PrismaService) {}
 
@@ -27,7 +27,7 @@ implements IReservationReaderRepository
           reservation.seatId,
           reservation.price,
           reservation.expirationDate,
-          reservation.status
+          reservation.status,
         );
       });
   }

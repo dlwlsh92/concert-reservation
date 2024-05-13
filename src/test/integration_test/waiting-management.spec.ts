@@ -3,7 +3,7 @@ import {
   ITokenParameterStorageToken,
 } from '../../domain/reservations/repositories/token-parameter-storage.interface';
 import { TokenManagementService } from '../../domain/reservations/application/token-management.service';
-import { TokenParameterRepository } from '../../infrastructure/reservation/persistence/token-parameter.repository';
+import { TokenParameterRepository } from '../../infrastructure/persistence/reservation/token-parameter.repository';
 import { RedisService } from '../../database/redis/redis.service';
 import { TestUtil } from './util';
 import { Test, TestingModule } from '@nestjs/testing';
