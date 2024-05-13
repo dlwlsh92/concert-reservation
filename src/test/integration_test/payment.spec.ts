@@ -18,6 +18,7 @@ import { IReservationWriteToken } from '../../domain/reservations/repositories/r
 import { ReservationWriteRepository } from '../../infrastructure/persistence/reservation/reservation-write.repository';
 import { ReservationService } from '../../domain/reservations/application/reservation.service';
 import { TestUtil } from './util';
+import { DataplatformService } from '../../infrastructure/external/dataplatform/dataplatform.service';
 
 describe('결제 usecase 테스트', () => {
   let createPaymentUsecase: CreatePaymentUsecase;
@@ -34,6 +35,7 @@ describe('결제 usecase 테스트', () => {
         PaymentValidationService,
         PointService,
         ReservationService,
+        DataplatformService,
         {
           provide: IOrderRepositoryToken,
           useClass: OrderWriteRepository,

@@ -6,6 +6,7 @@ import { ReservationModule } from './api/reservations/reservation.module';
 import { PointModule } from './api/points/point.module';
 import { PaymentModule } from './api/payment/payment.module';
 import { ConfigModule } from '@nestjs/config';
+import { DataplatformModule } from './infrastructure/external/dataplatform/dataplatform.module';
 
 console.log('=>(app.module.ts:26) process.env.NODE_ENV', process.env.NODE_ENV);
 
@@ -15,6 +16,7 @@ console.log('=>(app.module.ts:26) process.env.NODE_ENV', process.env.NODE_ENV);
     ReservationModule,
     PointModule,
     PaymentModule,
+    DataplatformModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env.local',
