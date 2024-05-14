@@ -1,4 +1,5 @@
 import { Order } from '../entities/order';
+import { PrismaTxType } from '../../../database/prisma/prisma.type';
 
 export const IOrderRepositoryToken = Symbol('IOrderRepository');
 
@@ -7,6 +8,7 @@ export interface IOrderWriteRepository {
     userId: number,
     reservationId: number,
     totalPrice: number,
-    orderDate: Date
+    orderDate: Date,
+    tx?: PrismaTxType,
   ): Promise<Order>;
 }

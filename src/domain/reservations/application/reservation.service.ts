@@ -13,6 +13,7 @@ import {
   IReservationWriteToken,
 } from '../repositories/reservation-write.interface';
 import { SeatDetails } from '../entities/concert-event-details';
+import { PrismaTxType } from '../../../database/prisma/prisma.type';
 
 @Injectable()
 export class ReservationService {
@@ -48,8 +49,16 @@ export class ReservationService {
       });
   }
 
-  async updateSeatPaidStatus(seatId: number, isPaid: boolean) {
-    return this.reservationWriteRepository.updateSeatPaidStatus(seatId, isPaid);
+  async updateSeatPaidStatus(
+    seatId: number,
+    isPaid: boolean,
+    tx?: PrismaTxType,
+  ) {
+    return this.reservationWriteRepository.updateSeatPaidStatus(
+      seatId,
+      isPaid,
+      tx,
+    );
   }
 
   async getAvailableSeats(concertEventId: number) {
