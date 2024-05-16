@@ -7,6 +7,7 @@ import { PrismaService } from '../../../database/prisma/prisma.service';
 import {
   getReservationExpirationDate,
   Reservation,
+  ReservationStatus,
 } from '../entities/reservation';
 import {
   IReservationWrite,
@@ -75,6 +76,18 @@ export class ReservationService {
         seatNumber: seat.seatNumber,
       };
     });
+  }
+
+  async updateReservationStatus(
+    reserviationId: number,
+    status: ReservationStatus,
+    tx?: PrismaTxType,
+  ) {
+    return this.reservationWriteRepository.updateReservationStatus(
+      reserviationId,
+      status,
+      tx,
+    );
   }
 
   async reserveSeat(seatId: number, concertEventId: number, userId: number) {

@@ -1,18 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { Order } from 'src/domain/payment/entities/order';
-import { SeatDetails } from 'src/domain/reservations/entities/concert-event-details';
+import { PaymentSuccessEvent } from '../../../domain/events/entities/payment-success-event';
+import { DataplatformServiceInterface } from '../../../domain/events/application/listener/payment-event-listener.service';
 
 @Injectable()
-export class DataplatformService {
-  async sendPaymentData(order: Order, seatDetails: SeatDetails) {
-    const data = {
-      orderId: order.id,
-      userId: order.userId,
-      totalPrice: order.totalPrice,
-      concertEventId: seatDetails.concertEventId,
-      seatId: seatDetails.id,
-    };
-    console.log(data);
+export class DataplatformService implements DataplatformServiceInterface {
+  async sendPaymentData(
+    paymentSuccessEvent: PaymentSuccessEvent,
+  ): Promise<boolean> {
     // 데이터 플랫폼에 예약 결제 데이터 전송 mock api
     return new Promise((resolve) => {
       setTimeout(() => {
