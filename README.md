@@ -1,3 +1,6 @@
+## 트랜잭션의 범위 및 내부 로직 융합에 따른 문제점 분석
+https://www.notion.so/9681f73d3d9e4522b096c2e6def9fe71?pvs=4
+
 ## 콘서트 예약 시스템에서의 Query 분석 및 DB Index 설계
 https://www.notion.so/query-DB-Index-792b57fb40484c0487a4936c9c205a94?pvs=4
 
