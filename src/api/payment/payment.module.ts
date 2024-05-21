@@ -18,7 +18,7 @@ import { IConcertDetailsReaderToken } from '../../domain/reservations/repositori
 import { ConcertDetailsReaderRepository } from '../../infrastructure/persistence/reservation/concert-details-reader.repository';
 import { IReservationWriteToken } from '../../domain/reservations/repositories/reservation-write.interface';
 import { ReservationWriteRepository } from '../../infrastructure/persistence/reservation/reservation-write.repository';
-import { DataplatformService } from 'src/infrastructure/external/dataplatform/dataplatform.service';
+import { PaymentEventPublisher } from '../../domain/events/application/publisher/payment-event-publisher.service';
 
 @Module({
   controllers: [PaymentController],
@@ -29,7 +29,7 @@ import { DataplatformService } from 'src/infrastructure/external/dataplatform/da
     PaymentValidationService,
     PointService,
     ReservationService,
-    DataplatformService,
+    PaymentEventPublisher,
     {
       provide: IReservationWriteToken,
       useClass: ReservationWriteRepository,

@@ -28,6 +28,7 @@
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^3.2.2",
     "@nestjs/core": "^9.0.0",
+    "@nestjs/event-emitter": "^2.0.4",
     "@nestjs/platform-express": "^9.0.0",
     "@prisma/client": "^5.12.1",
     "dotenv": "^16.4.5",

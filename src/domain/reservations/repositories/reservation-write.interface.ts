@@ -20,4 +20,9 @@ export interface IReservationWrite {
     isPaid: boolean,
     tx?: PrismaTxType,
   ): Promise<SeatDetails>;
+  updateReservationStatus(
+    reservationId: number,
+    status: string,
+    tx?: PrismaTxType,
+  ): Promise<Reservation>;
 }
