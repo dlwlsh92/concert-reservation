@@ -1,3 +1,6 @@
+## 부하 테스트 보고서
+https://www.notion.so/590321bb1412494d93d0ffa6db71423e?pvs=4
+
 ## 트랜잭션의 범위 및 내부 로직 융합에 따른 문제점 분석
 https://www.notion.so/9681f73d3d9e4522b096c2e6def9fe71?pvs=4
 
